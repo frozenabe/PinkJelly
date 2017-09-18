@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View} from 'react-native';
-import { RootNavigation } from './navigation/RootNavigation';
 import * as firebase from 'firebase';
 import Login from './component/Login.js';
 import EmailVerify from './component/EmailVerify'
+import { StyleSheet, View, StatusBar} from 'react-native';
+import { ScreenOrientation } from 'expo';
+import Swiper from 'react-native-swiper';
+import Screens from './screens';
 
 export default class App extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ export default class App extends Component {
   }
 
   componentWillMount () {
+    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
     const config = {
     apiKey: "AIzaSyBL4NufHmm1JthU7Xy0Mrw0oWakEDowLtU",
     authDomain: "lateral-spirit-179615.firebaseapp.com",
@@ -23,7 +26,6 @@ export default class App extends Component {
     messagingSenderId: "999843785302"
   };
   firebase.initializeApp(config);
-  // firebase.auth().createUserWithEmailAndPassword('ddd@naver.com', '1111111');
   }
 
   componentDidMount() {
@@ -40,7 +42,6 @@ export default class App extends Component {
         _this.setState({ isLoading: false });
       }
     });
-  }
 
   render() {
     if (!this.state.isLoading) {
@@ -58,12 +59,13 @@ export default class App extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <RootNavigation />
+          <StatusBar barStyle="dark-content" />
+          <Screens/>
         </View>
       )
     }
   }
-}
+
 
 const styles = StyleSheet.create({
   container: {

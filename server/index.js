@@ -1,12 +1,7 @@
-// const admin = require("firebase-admin");
+const app = require('./server.js');
 
-// const serviceAccount = require("gs://fir-demo-project.appspot.com/");
+const SERVER_URL = 'ec2-13-124-232-5.ap-northeast-2.compute.amazonaws.com';
 
-// admin.initializeApp({
-//   credential: admin.credential.cert({
-//     projectId: process.env.PROJECT_ID,
-//     clientEmail: process.env.SERVICE_ACCOUNT_ID,
-//     privateKey: process.env.PRIVATE_KEY,
-//   }),
-//   databaseURL: process.env.DATABASE_URL,
-// });
+app.listen(SERVER_URL, () => {
+  console.log('Connected');
+});

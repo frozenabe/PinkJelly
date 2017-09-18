@@ -1,43 +1,72 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity,StatusBar} from 'react-native';
-import {Camera, Permissions} from 'expo';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Camera, Permissions } from 'expo';
+import axios from 'axios';
+import { RNS3 } from 'react-native-aws3';
 
-export default class CameraScreen extends React.Component {
+import Shutter from '../components/Shutter';
+
+export default class CameraScreen extends Component {
   state = {
     hasCameraPermission: null,
-    type: Camera.Constants.Type.back
   };
 
   async componentWillMount() {
-    const {status} = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({
-      hasCameraPermission: status === 'granted'
-    });
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted' });
+  }
+
+  snapshot() {
+    this.camera.takePictureAsync()
+      .then((data) => {
+        const file = {
+          uri: data,
+          name: "image.jpg",
+          type: "image/jpg"
+        }
+
+
+        const options = {
+          keyPrefix: "images/",
+          bucket: "foxtailbucket",
+          region: "ap-northeast-2",
+          accessKey: "AKIAIIUSH444NSDBVBNA",
+          secretKey: "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",
+          successActionStatus: 201
+        }
+
+        RNS3.put(file, options).then(response => {
+          if (response.status !== 201) {
+            throw new Error("Failed to upload image to S3");
+          }
+          console.log(response.body);
+        });
+
+        this.props.setImagePath(data);
+      })
+      .then(() => {
+        axios.get('/')
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => console.log(err));
+      })
+      .then(() => this.props.slideTrigger())
+      .catch(err => console.log(err));
   }
 
   render() {
-    const {hasCameraPermission} = this.state;
+    const { hasCameraPermission } = this.state;
     if (hasCameraPermission === null) {
-      return <View/>;
+      return <Text>ssibal</Text>;
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
       return (
-        <View style={{flex: 1}}>
-          <Camera style={{flex: 1}} type={this.state.type}>
-            <View style={{flex: 1,backgroundColor: 'transparent',flexDirection: 'row'}}>
-              <TouchableOpacity style={{flex: 0.1,alignSelf: 'flex-end',alignItems: 'center'}}
-                                onPress={() => {
-                                  this.setState({
-                                    type: this.state.type === Camera.Constants.Type.back
-                                      ? Camera.Constants.Type.front
-                                      : Camera.Constants.Type.back
-                                  });
-                                }}>
-                <Text style={{fontSize: 18,marginBottom: 10,color: 'white'}}>
-                  {' '}Flip{' '}
-                </Text>
-              </TouchableOpacity>
+        <View style={{ flex: 1 }}>
+          <Camera ref={ref => {this.camera = ref;}} style={styles.camera}>
+            <View style={styles.shutterContainer}>
+              <Shutter snapshot={this.snapshot.bind(this)}/>
             </View>
           </Camera>
         </View>
@@ -47,10 +76,15 @@ export default class CameraScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  camera: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+  },
+  shutterContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginBottom: 24,
+    backgroundColor: 'transparent',
+  },
 });

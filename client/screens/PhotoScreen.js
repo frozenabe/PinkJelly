@@ -1,21 +1,28 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View, Text, Image} from 'react-native';
 
-export default class PhotoScreen extends Component {
+import Loading from '../components/Loading';
 
-  render() {
-    return (
-      <View>
-        <Text>
-          PhotoScreen
-        </Text>
-      </View>
-    );
-  }
+const PhotoScreen = ({imagePath}) => {
+  return (
+    <View style={styles.imageContainer}>
+      {
+        !imagePath
+        ? <Loading/>
+        : <Image source={{uri: imagePath}} style={styles.imageComp}/>
+      }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
+  imageContainer: {
+    flex: 1,
+    position: 'relative',
+  },
+  imageComp: {
+    flex: 1,
+  },
 });
+
+export default PhotoScreen;

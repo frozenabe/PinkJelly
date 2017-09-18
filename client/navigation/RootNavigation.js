@@ -2,24 +2,23 @@ import react from 'react';
 import {StackNavigator} from 'react-navigation';
 import {CameraScreen, PhotoScreen} from '../screens';
 
+const headerStyle = {
+  backgroundColor: '#1abc9c',
+};
+
 export const RootNavigation = StackNavigator({
   CameraScreen: {
     screen: CameraScreen,
     navigationOptions: {
-      headerStyle: {
-        backgroundColor: 'transparent',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        borderBottomWidth: 0,
-      },
+      title: 'Camera',
+      headerStyle,
     },
   },
   PhotoScreen: {
     screen: PhotoScreen,
     navigationOptions: {
-
+      title: 'Photo View',
+      headerStyle,
     },
   }
 });
