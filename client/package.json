@@ -32,6 +32,6 @@
     "react-native-aws3": "^0.0.8",
     "react-native-elements": "^0.16.0",
     "react-navigation": "^1.0.0-beta.11",
-    "react-native-swiper": "^1.5.12",
+    "react-native-swiper": "^1.5.12"
   }
 }

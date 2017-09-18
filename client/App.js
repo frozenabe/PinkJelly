@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import Login from './component/Login.js';
-import EmailVerify from './component/EmailVerify'
+import Login from './components/Login.js';
+import EmailVerify from './components/EmailVerify'
 import { StyleSheet, View, StatusBar} from 'react-native';
 import { ScreenOrientation } from 'expo';
 import Swiper from 'react-native-swiper';
@@ -24,8 +24,8 @@ export default class App extends Component {
     projectId: "lateral-spirit-179615",
     storageBucket: "lateral-spirit-179615.appspot.com",
     messagingSenderId: "999843785302"
-  };
-  firebase.initializeApp(config);
+    };
+    firebase.initializeApp(config);
   }
 
   componentDidMount() {
@@ -42,6 +42,7 @@ export default class App extends Component {
         _this.setState({ isLoading: false });
       }
     });
+  }
 
   render() {
     if (!this.state.isLoading) {
@@ -65,7 +66,7 @@ export default class App extends Component {
       )
     }
   }
-
+}
 
 const styles = StyleSheet.create({
   container: {

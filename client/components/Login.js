@@ -6,7 +6,7 @@ import {
   Button,
 } from 'react-native';
 import * as firebase from 'firebase';
-import SignUp from './SignUp'
+import SignUp from './SignUp';
 
 export default class Login extends Component {
   constructor(props) {
