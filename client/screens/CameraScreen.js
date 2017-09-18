@@ -25,7 +25,6 @@ export default class CameraScreen extends Component {
           type: "image/jpg"
         }
 
-
         const options = {
           keyPrefix: "images/",
           bucket: "foxtailbucket",
