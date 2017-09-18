@@ -1,12 +1,16 @@
-// const admin = require("firebase-admin");
+const express = require('express');
+const bodyParser = require('body-parser');
+const doit = require('./getPythonData')
 
-// const serviceAccount = require("gs://fir-demo-project.appspot.com/");
+const app = express();
+const port = process.env.PORT || 7080;
 
-// admin.initializeApp({
-//   credential: admin.credential.cert({
-//     projectId: process.env.PROJECT_ID,
-//     clientEmail: process.env.SERVICE_ACCOUNT_ID,
-//     privateKey: process.env.PRIVATE_KEY,
-//   }),
-//   databaseURL: process.env.DATABASE_URL,
-// });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+  doit('https://s3.ap-northeast-2.amazonaws.com/foxtailbucket/images/image.jpg')
+    .then(data => res.send(data));
+});
+
+app.listen(port, () => console.log(`server listen ${port}`));
