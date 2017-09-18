@@ -90,13 +90,6 @@
     google-proto-files "^0.12.0"
     is "^3.0.1"
 
-"@moovel/yolo@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@moovel/yolo/-/yolo-0.2.0.tgz#dfd06a5581474cdb5460fba23536f45f91416036"
-  dependencies:
-    bindings "~1.2.1"
-    nan "^2.0.0"
-
 "@types/jsonwebtoken@^7.1.33":
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-7.2.3.tgz#483c8f39945e1e6d308dcc51fd4aeca5208d4dca"
@@ -259,10 +252,6 @@ bcrypt-pbkdf@^1.0.0:
 binary-extensions@^1.0.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.10.0.tgz#9aeb9a6c5e88638aad171e167f5900abe24835d0"
-
-bindings@~1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
 
 block-stream@*:
   version "0.0.9"
@@ -1552,7 +1541,7 @@ ms@^0.7.1:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.3.tgz#708155a5e44e33f5fd0fc53e81d0d40a91be1fff"
 
-nan@^2.0.0, nan@^2.3.0, nan@^2.6.2:
+nan@^2.3.0, nan@^2.6.2:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
 
