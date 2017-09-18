@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Dimensions} from 'react-native';
-import { RootNavigation } from './navigation/RootNavigation';
+import { StyleSheet, View, StatusBar} from 'react-native';
 import { ScreenOrientation } from 'expo';
-
-import Loading from './components/Loading';
+import Swiper from 'react-native-swiper';
+import Screens from './screens';
 
 export default class App extends Component {
-
   componentWillMount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
   }
@@ -14,8 +12,8 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Loading/> */}
-        <RootNavigation />
+        <StatusBar barStyle="dark-content" />
+        <Screens/>
       </View>
     );
   }

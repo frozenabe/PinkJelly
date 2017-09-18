@@ -12,7 +12,6 @@
     "@google-cloud/datastore": "^1.1.0",
     "@google-cloud/storage": "^1.2.1",
     "@google-cloud/vision": "^0.12.0",
-    "@moovel/yolo": "^0.2.0",
     "body-parser": "^1.18.1",
     "express": "^4.15.4",
     "firebase-admin": "^5.2.1",
