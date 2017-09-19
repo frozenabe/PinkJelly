@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Swiper from 'react-native-swiper';
+import { ScreenOrientation } from 'expo';
 
 import CameraScreen from './CameraScreen';
 import PhotoScreen from './PhotoScreen';
@@ -9,6 +10,10 @@ import PhotoScreen from './PhotoScreen';
 export default class Screens extends Component {
   state = {
     imagePath: null,
+  }
+
+  componentWillMount() {
+    ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
   }
 
   setImagePath(path) {

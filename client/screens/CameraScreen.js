@@ -1,5 +1,5 @@
-import { 
-  AWS_S3_KEY_PREFIX, 
+import {
+  AWS_S3_KEY_PREFIX,
   AWS_S3_BUCKET_NAME,
   AWS_REGION,
   AWS_ACCESS_KEY,
@@ -89,14 +89,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
-<<<<<<< HEAD
     justifyContent: 'flex-end',
     marginBottom: 24,
     marginRight: 24,
-=======
-    justifyContent: 'center',
-    marginBottom: 24,
->>>>>>> 1666f5bed305b5c6c681ee63bcecc4716cbb9f62
     backgroundColor: 'transparent',
   },
 });
