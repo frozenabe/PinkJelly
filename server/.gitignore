@@ -60,5 +60,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# YOLO files
+yolo.cfg
+yolo.weights
+model_data/yolo.h5
 
 # End of https://www.gitignore.io/api/node

@@ -1,30 +1,32 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 const Shutter = ({snapshot}) => {
   return (
     <View style={styles.outterCircle}>
-      <TouchableOpacity style={styles.innerCircle} onPress={() => snapshot()}>
-        {/* Action Shutter */}
-      </TouchableOpacity>
+      <TouchableWithoutFeedback style={styles.innerCircle} onPress={() => this.refs.image.bounce(200).then(snapshot())}>
+        <Animatable.Image ref="image" source={{uri: 'https://s3.ap-northeast-2.amazonaws.com/foxtailbucket/resources/pink_paw.png'}} style={{flex: 1,}} resizeMode="cover"/>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   outterCircle: {
-    width: 64,
-    height: 64,
+    width: 80,
+    height: 80,
     padding: 4,
-    borderColor: '#fff',
+    borderColor: 'rgba(255,255,255,.9)',
     borderWidth: 4,
-    borderRadius: 64,
+    borderRadius: 80,
     backgroundColor: 'transparent',
   },
   innerCircle: {
     flex: 1,
-    borderRadius: 56,
-    backgroundColor: '#fff',
+    padding: 8,
+    borderRadius: 72,
+    backgroundColor: 'rgba(255,255,255,.9)
   },
 });
 

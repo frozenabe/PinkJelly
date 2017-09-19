@@ -1,3 +1,4 @@
+import { AWS_S3_LOADING_IMAGE_URL } from 'react-native-dotenv';
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 
@@ -7,7 +8,7 @@ export default class Loading extends Component {
     return (
       <View style={styles.loading}>
         <Image
-          source={{uri: 'https://s3.ap-northeast-2.amazonaws.com/foxtailbucket/resources/cat.png'}}
+          source={{ uri: AWS_S3_LOADING_IMAGE_URL }}
           style={styles.loadingLogo}
           resizeMode="cover"
         />

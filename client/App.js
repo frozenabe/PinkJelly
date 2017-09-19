@@ -1,7 +1,15 @@
-import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { 
+  GOOGLE_API_KEY, 
+  GOOGLE_AUTH_DOMAIN,
+  GOOGLE_DB_URL,
+  GOOGLE_PROJECT_ID,
+  GOOGLE_STORAGE_BUCKET,
+  GOOGLE_MESSAGING_SENDER_ID
+} from 'react-native-dotenv';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import {ScreenOrientation} from 'expo';
+import { ScreenOrientation } from 'expo';
 import * as firebase from 'firebase';
 import Screens from './screens';
 import Login from './components/Login';
@@ -9,18 +17,19 @@ import EmailVerify from './components/EmailVerify'
 
 export default class App extends Component {
   state = {
-    isLoading: false
+    isLoading: false,
   }
 
   componentWillMount() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+    ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
+
     const config = {
-      apiKey: "AIzaSyBL4NufHmm1JthU7Xy0Mrw0oWakEDowLtU",
-      authDomain: "lateral-spirit-179615.firebaseapp.com",
-      databaseURL: "https://lateral-spirit-179615.firebaseio.com",
-      projectId: "lateral-spirit-179615",
-      storageBucket: "lateral-spirit-179615.appspot.com",
-      messagingSenderId: "999843785302"
+      apiKey: GOOGLE_API_KEY,
+      authDomain: GOOGLE_AUTH_DOMAIN,
+      databaseURL: GOOGLE_DB_URL,
+      projectId: GOOGLE_PROJECT_ID,
+      storageBucket: GOOGLE_STORAGE_BUCKET,
+      messagingSenderId: GOOGLE_MESSAGING_SENDER_ID,
     };
     firebase.initializeApp(config);
   }
@@ -28,36 +37,41 @@ export default class App extends Component {
   componentDidMount() {
     const _this = this;
 
-    firebase.auth().signOut().catch(err => console.log(err));
+    // firebase.auth().signOut().catch(err => console.log(err));
 
     firebase.auth().onAuthStateChanged(user => {
       (user)
         ? _this.setState({isLoading: true})
-        :_this.setState({isLoading: false});
+        : _this.setState({isLoading: false});
     });
   }
 
   render() {
-    const {isLoading} = this.state;
-    if (!isLoading) {
-      return (
-        <View style={styles.container}>
-          <Login/>
-        </View>
-      );
-    } else if (isLoading && !firebase.auth().currentUser.emailVerified) {
-      return (
-        <View style={styles.container}>
-          <EmailVerify/>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          <Screens/>
-        </View>
-      )
-    }
+    return (
+      <View style={styles.container}>
+        <Screens/>
+      </View>
+    );
+    // const {isLoading} = this.state;
+    // if (!isLoading) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <Login/>
+    //     </View>
+    //   );
+    // } else if (isLoading && !firebase.auth().currentUser.emailVerified) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <EmailVerify/>
+    //     </View>
+    //   );
+    // } else {
+    //   return (
+    //     <View style={styles.container}>
+    //       <Screens/>
+    //     </View>
+    //   )
+    // }
   }
 }
 const styles = StyleSheet.create({

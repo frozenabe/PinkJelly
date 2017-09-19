@@ -1,6 +1,13 @@
-import React, {Component} from 'react';
+import { 
+  AWS_S3_KEY_PREFIX, 
+  AWS_S3_BUCKET_NAME,
+  AWS_REGION,
+  AWS_ACCESS_KEY,
+  AWS_SECRET_KEY,
+} from 'react-native-dotenv';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import { Camera, Permissions } from 'expo';
+import { Camera, Permissions, ScreenOrientation } from 'expo';
 import axios from 'axios';
 import { RNS3 } from 'react-native-aws3';
 
@@ -26,12 +33,12 @@ export default class CameraScreen extends Component {
         }
 
         const options = {
-          keyPrefix: "images/",
-          bucket: "foxtailbucket",
-          region: "ap-northeast-2",
-          accessKey: "AKIAIIUSH444NSDBVBNA",
-          secretKey: "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",
-          successActionStatus: 201
+          keyPrefix: AWS_S3_KEY_PREFIX,
+          bucket: AWS_S3_BUCKET_NAME,
+          region: AWS_REGION,
+          accessKey: AWS_ACCESS_KEY,
+          secretKey: AWS_SECRET_KEY,
+          successActionStatus: 201,
         }
 
         RNS3.put(file, options).then(response => {
@@ -82,8 +89,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
+<<<<<<< HEAD
+    justifyContent: 'flex-end',
+    marginBottom: 24,
+    marginRight: 24,
+=======
     justifyContent: 'center',
     marginBottom: 24,
+>>>>>>> 1666f5bed305b5c6c681ee63bcecc4716cbb9f62
     backgroundColor: 'transparent',
   },
 });
