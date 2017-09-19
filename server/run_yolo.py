@@ -3,18 +3,18 @@
 import sys
 import argparse
 import colorsys
-import imghdr
+# import imghdr
 import os
 import random
 import warnings
 import json
+from io import BytesIO
 import numpy as np
 import requests
 from keras import backend as K
 from keras.models import load_model
 from PIL import Image, ImageDraw, ImageFont
 from yad2k.models.keras_yolo import yolo_eval, yolo_head
-from io import BytesIO
 #deactivate tensor warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings('ignore')
