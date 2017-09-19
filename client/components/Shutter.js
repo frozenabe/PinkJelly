@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-const Shutter = ({snapshot}) => {
-  return (
-    <View style={styles.outterCircle}>
-      <TouchableWithoutFeedback style={styles.innerCircle} onPress={() => this.refs.image.bounce(200).then(snapshot())}>
-        <Animatable.Image ref="image" source={{uri: 'https://s3.ap-northeast-2.amazonaws.com/foxtailbucket/resources/pink_paw.png'}} style={{flex: 1,}} resizeMode="cover"/>
-      </TouchableWithoutFeedback>
-    </View>
-  );
-}
+export default class Shutter extends Component {
+
+  render() {
+    const { snapshot } = this.props;
+    return (
+      <View style={styles.outterCircle}>
+        <TouchableWithoutFeedback onPress={() => this.refs.view.rubberBand(600).then(() => snapshot())}>
+          <Animatable.View ref="view" style={styles.innerCircle}>
+            <Image source={{uri: 'https://s3.ap-northeast-2.amazonaws.com/foxtailbucket/resources/pink_paw.png'}} style={{flex:1}} resizeMode="cover"/>
+          </Animatable.View>
+        </TouchableWithoutFeedback>
+      </View>
+    );
+  }
+};
 
 const styles = StyleSheet.create({
   outterCircle: {
@@ -26,8 +32,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
     borderRadius: 72,
-    backgroundColor: 'rgba(255,255,255,.9)
+    backgroundColor: 'rgba(255,255,255,.9)',
   },
 });
-
-export default Shutter;

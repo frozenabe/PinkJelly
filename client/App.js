@@ -1,5 +1,5 @@
-import { 
-  GOOGLE_API_KEY, 
+import {
+  GOOGLE_API_KEY,
   GOOGLE_AUTH_DOMAIN,
   GOOGLE_DB_URL,
   GOOGLE_PROJECT_ID,
@@ -21,7 +21,7 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
+    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
 
     const config = {
       apiKey: GOOGLE_API_KEY,
