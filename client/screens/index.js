@@ -10,15 +10,22 @@ import PhotoScreen from './PhotoScreen';
 export default class Screens extends Component {
   state = {
     imagePath: null,
+    detectionData: [],
   }
 
-  componentWillMount() {
+  componentDidMount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
   }
 
   setImagePath(path) {
     this.setState({
       imagePath: path,
+    });
+  }
+
+  getDetectionData(data) {
+    this.setState({
+      detectionData: data,
     });
   }
 
@@ -29,8 +36,12 @@ export default class Screens extends Component {
   render() {
     return (
       <Swiper ref={(swiper) => {this._swiper = swiper;}} showsButtons={false} loop={false}>
-        <CameraScreen setImagePath={this.setImagePath.bind(this)} slideToPhoto={this.slideToPhoto.bind(this)}/>
-        <PhotoScreen imagePath={this.state.imagePath} />
+        <CameraScreen
+          setImagePath={this.setImagePath.bind(this)}
+          slideToPhoto={this.slideToPhoto.bind(this)}
+          getDetectionData={this.getDetectionData.bind(this)}
+        />
+        <PhotoScreen imagePath={this.state.imagePath} detectionData={this.state.detectionData}/>
       </Swiper>
     );
   }

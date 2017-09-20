@@ -5,10 +5,27 @@ import * as Animatable from 'react-native-animatable';
 
 export default class TouchToSpeakButton extends Component {
 
+
   render() {
+    const { top, left } = this.props;
     return (
-      <View>
-        <Animatable.Image animation="rubberBand"></Animatable.Image>
+      <View
+        style={{
+          position: 'absolute',
+          top: top,
+          left: left,
+          zIndex:5,
+          width: 40,
+          height: 40,
+          borderRadius: 40,
+        }}>
+        <Animatable.View
+          animation="zoomIn"
+          duration={1000}
+          easing="ease-out"
+          iterationCount="infinite"
+          style={styles.sonar}>
+        </Animatable.View>
       </View>
     );
   }
@@ -16,19 +33,10 @@ export default class TouchToSpeakButton extends Component {
 }
 
 const styles = StyleSheet.create({
-  outterCircle: {
-    width: 80,
-    height: 80,
-    padding: 4,
-    borderColor: 'rgba(255,255,255,.9)',
-    borderWidth: 4,
-    borderRadius: 80,
-    backgroundColor: 'transparent',
-  },
-  innerCircle: {
+  sonar: {
     flex: 1,
-    padding: 8,
-    borderRadius: 72,
-    backgroundColor: 'rgba(255,255,255,.9)',
+    borderWidth: 4,
+    borderColor: "rgba(255,255,255, .5)",
+    borderRadius: 40,
   },
 });
