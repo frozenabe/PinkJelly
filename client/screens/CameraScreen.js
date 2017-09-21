@@ -51,9 +51,11 @@ export default class CameraScreen extends Component {
         this.props.setImagePath(data);
       })
       .then(() => {
-        axios.get('/')
+        axios.get('http://10.130.106.49:7080/')
           .then(res => {
-            console.log(res);
+            console.log(typeof res.data)
+            console.log(Array.isArray(res.data))
+            this.props.getDetectionData(res.data);
           })
           .catch(err => console.log(err));
       })
