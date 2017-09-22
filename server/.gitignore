@@ -61,9 +61,9 @@ typings/
 .env
 
 # YOLO files
-yolo.cfg
-yolo.weights
-model_data/yolo.h5
+python_yolo/yolo.cfg
+python_yolo/yolo.weights
+python_yolo/model_data/yolo.h5
 
 # vscode
 .vscode/*

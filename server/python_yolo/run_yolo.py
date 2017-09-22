@@ -50,7 +50,7 @@ parser.add_argument(
     '--score_threshold',
     type=float,
     help='threshold for bounding box scores, default .3',
-    default=.6)
+    default=.3)
 parser.add_argument(
     '-iou',
     '--iou_threshold',

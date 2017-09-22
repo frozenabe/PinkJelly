@@ -60,10 +60,7 @@ export default class CameraScreen extends Component {
             }
             this.props.setDetectionData(res.data);
           })
-          .then(() => {
-            console.log('aweaweaweawe');
-            this.props.setLoadingStatus(false)
-          })
+          .then(() => this.props.setLoadingStatus(false))
           .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
@@ -78,12 +75,9 @@ export default class CameraScreen extends Component {
       return <Text>No access to camera</Text>;
     } else {
       return (
-        <View style={{ flex: 1 }}>
-          <Camera ref={ref => {this.camera = ref;}} style={styles.camera}>
-            <View style={styles.viewport}>
-              <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)}/>
-            </View>
-          </Camera>
+        <View style={styles.screenContainer}>
+          <Camera ref={ref => {this.camera = ref;}} style={styles.camera}/>
+          <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)}/>
         </View>
       );
     }
@@ -91,8 +85,12 @@ export default class CameraScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  camera: {
+  screenContainer: {
     flex: 1,
+    flexDirection: 'row',
+  },
+  camera: {
+    flex: 9,
   },
   viewport: {
     flex: 1,
