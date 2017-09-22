@@ -4,6 +4,7 @@ import {
   AWS_REGION,
   AWS_ACCESS_KEY,
   AWS_SECRET_KEY,
+  AWS_EC2,
 } from 'react-native-dotenv';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
@@ -51,10 +52,9 @@ export default class CameraScreen extends Component {
         this.props.setImagePath(data);
       })
       .then(() => {
-        axios.get('http://10.130.106.49:7080/')
+        axios.get(AWS_EC2)
           .then(res => {
-            console.log(typeof res.data)
-            console.log(Array.isArray(res.data))
+            console.log(res.data)
             this.props.getDetectionData(res.data);
           })
           .catch(err => console.log(err));

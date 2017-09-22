@@ -1,14 +1,11 @@
 const beautifyData = (data) => {
-  data = data.replace(/]/g, '');
-  data = data.replace(/\[/g, '');
-  data = data.replace(/\n/g, '');
-  data = data.replace(/,/g, '');
+  data = data.replace(/]|\[|\n|,/g, '');
   data = data.split(' ');
 
-  let obj = {};
+  let labelData = {};
 
   if (data.length === 6) {
-    obj = {
+    labelData = {
       label: `${data[0]} ${data[1]}`,
       top: parseInt(data[2]),
       right: parseInt(data[3]),
@@ -16,8 +13,8 @@ const beautifyData = (data) => {
       left: parseInt(data[5]),
     }
   } else {
-    obj = {
-      label: data[0],
+    labelData = {
+      label: `${data[0]}`,
       top: parseInt(data[1]),
       right: parseInt(data[2]),
       bottom: parseInt(data[3]),
@@ -25,7 +22,7 @@ const beautifyData = (data) => {
     }
   }
 
-  return obj;
+  return labelData;
 };
 
 module.exports = beautifyData;

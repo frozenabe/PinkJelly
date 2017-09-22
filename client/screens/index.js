@@ -14,7 +14,7 @@ export default class Screens extends Component {
   }
 
   componentDidMount() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
+    ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
   }
 
   setImagePath(path) {
@@ -29,20 +29,16 @@ export default class Screens extends Component {
     });
   }
 
-  slideToPhoto() {
-    this._swiper.scrollBy(1);
-  }
+  // slideToPhoto() {
+  //   this._swiper.scrollBy(1);
+  // }
 
   render() {
     return (
-      <Swiper ref={(swiper) => {this._swiper = swiper;}} showsButtons={false} loop={false}>
         <CameraScreen
           setImagePath={this.setImagePath.bind(this)}
-          slideToPhoto={this.slideToPhoto.bind(this)}
           getDetectionData={this.getDetectionData.bind(this)}
         />
-        <PhotoScreen imagePath={this.state.imagePath} detectionData={this.state.detectionData}/>
-      </Swiper>
     );
   }
 
@@ -53,3 +49,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+
+// return (
+//   <Swiper ref={(swiper) => {this._swiper = swiper;}} showsButtons={false} loop={false}>
+//     <CameraScreen
+//       setImagePath={this.setImagePath.bind(this)}
+//       slideToPhoto={this.slideToPhoto.bind(this)}
+//       getDetectionData={this.getDetectionData.bind(this)}
+//     />
+//     <PhotoScreen imagePath={this.state.imagePath} detectionData={this.state.detectionData}/>
+//   </Swiper>
+// );

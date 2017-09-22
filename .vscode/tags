@@ -102,8 +102,8 @@ default	../server/python_yolo/retrainer/voc_conversion_scripts/voc_to_hdf5.py	/^
 default	../server/python_yolo/retrainer/voc_conversion_scripts/voc_to_tfrecords.py	/^    default='~\/data\/PascalVOC\/VOCdevkit')$/;"	kind:variable	line:37
 default	../server/run_yolo.py	/^    default='model_data\/coco_classes.txt')$/;"	kind:variable	line:37
 default	../server/run_yolo.py	/^    default='model_data\/yolo_anchors.txt')$/;"	kind:variable	line:32
-default	../server/run_yolo.py	/^    default=.3)$/;"	kind:variable	line:53
 default	../server/run_yolo.py	/^    default=.5)$/;"	kind:variable	line:59
+default	../server/run_yolo.py	/^    default=.6)$/;"	kind:variable	line:53
 defaultdict	../server/python_yolo/retrainer/yad2k.py	/^from collections import defaultdict$/;"	kind:namespace	line:12
 description	../server/python_yolo/retrainer/retrain_yolo.py	/^    description="Retrain or 'fine-tune' a pretrained YOLOv2 model for your own data.")$/;"	kind:variable	line:23
 description	../server/python_yolo/retrainer/train_overfit.py	/^    description='Train YOLO_v2 model to overfit on a single image.')$/;"	kind:variable	line:29
