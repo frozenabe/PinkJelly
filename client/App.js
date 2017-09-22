@@ -48,28 +48,13 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Screens/>
+        {/* {
+          loggedIn
+          ? <Screens/>
+          : <Authentication onCheckLoggedIn={this.onCheckLoggedIn.bind(this)}/>
+        } */}
       </View>
     );
-    // const {isLoading} = this.state;
-    // if (!isLoading) {
-    //   return (
-    //     <View style={styles.container}>
-    //       <Login/>
-    //     </View>
-    //   );
-    // } else if (isLoading && !firebase.auth().currentUser.emailVerified) {
-    //   return (
-    //     <View style={styles.container}>
-    //       <EmailVerify/>
-    //     </View>
-    //   );
-    // } else {
-    //   return (
-    //     <View style={styles.container}>
-    //       <Screens/>
-    //     </View>
-    //   )
-    // }
   }
 }
 const styles = StyleSheet.create({

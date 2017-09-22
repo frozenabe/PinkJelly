@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import TouchToSpeakButton from '../components/TouchToSpeakButton';
 import Loading from '../components/Loading';
+import ControlBar from '../components/ControlBar';
 
-const PhotoScreen = ({imagePath, detectionData}) => {
-  
+
+const PhotoScreen = ({imagePath, detectionData, setDetectionData}) => {
   return (
     <View style={styles.imageContainer}>
       {
@@ -18,6 +19,7 @@ const PhotoScreen = ({imagePath, detectionData}) => {
           ? <Loading/>
           : <Image source={{uri: imagePath}} style={styles.imageComp}/>
       }
+      <ControlBar screen="PHOTO" setDetectionData={setDetectionData}/>
     </View>
   );
 }

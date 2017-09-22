@@ -7,12 +7,13 @@ import {
   AWS_EC2,
 } from 'react-native-dotenv';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Camera, Permissions, ScreenOrientation } from 'expo';
 import axios from 'axios';
 import { RNS3 } from 'react-native-aws3';
 
-import Shutter from '../components/Shutter';
+import ControlBar from '../components/ControlBar';
+
 
 export default class CameraScreen extends Component {
   state = {
@@ -26,7 +27,7 @@ export default class CameraScreen extends Component {
 
   snapshot() {
     this.camera.takePictureAsync()
-      .then((data) => {
+      .then(data => {
         const file = {
           uri: data,
           name: "image.jpg",
@@ -48,33 +49,39 @@ export default class CameraScreen extends Component {
           }
           console.log(response.body);
         });
-
         this.props.setImagePath(data);
       })
       .then(() => {
-        axios.get(AWS_EC2)
+        this.props.setLoadingStatus(true);
+        axios.get('http://10.130.106.49:7080/')
           .then(res => {
-            console.log(res.data)
-            this.props.getDetectionData(res.data);
+            if (!res.data.length) {
+              return alert(`We can't detect anything. /n Please take a new picture.`)
+            }
+            this.props.setDetectionData(res.data);
+          })
+          .then(() => {
+            console.log('aweaweaweawe');
+            this.props.setLoadingStatus(false)
           })
           .catch(err => console.log(err));
       })
-      .then(() => this.props.slideToPhoto())
       .catch(err => console.log(err));
   }
 
   render() {
     const { hasCameraPermission } = this.state;
-    if (hasCameraPermission === null) {
-      return <Text>ssibal</Text>;
-    } else if (hasCameraPermission === false) {
+    if (!hasCameraPermission) {
+    // if (hasCameraPermission === null) {
+    //   return <Text>ssibal</Text>;
+    // } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
       return (
         <View style={{ flex: 1 }}>
           <Camera ref={ref => {this.camera = ref;}} style={styles.camera}>
-            <View style={styles.shutterContainer}>
-              <Shutter snapshot={this.snapshot.bind(this)}/>
+            <View style={styles.viewport}>
+              <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)}/>
             </View>
           </Camera>
         </View>
@@ -87,13 +94,10 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
   },
-  shutterContainer: {
+  viewport: {
     flex: 1,
-    flexDirection: 'row',
     alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    marginBottom: 24,
-    marginRight: 24,
+    justifyContent: 'center',
     backgroundColor: 'transparent',
   },
 });

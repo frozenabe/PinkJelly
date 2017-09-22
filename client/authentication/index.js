@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { ScreenOrientation } from 'expo';
 import * as firebase from 'firebase';
 
-import Register from './Register';
+import SignIn from './SignIn';
 import EmailVerify from './EmailVerify';
 
 export default class Authentication extends Component {
@@ -13,6 +13,7 @@ export default class Authentication extends Component {
 
   componentDidMount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+
   }
 
   onVerifyEmail() {
@@ -31,8 +32,8 @@ export default class Authentication extends Component {
       <View style={styles.wrapper}>
         {
           !emailVerification
-          ? <EmailVerify onVerifyEmail={this.onVerifyEmail.bind(this)}/>
-          : <Register onCheckLoggedIn={this.props.onCheckLoggedIn} onVerifyEmail={this.onVerifyEmail.bind(this)}/>
+            ? <EmailVerify onVerifyEmail={this.onVerifyEmail.bind(this)}/>
+            : <SignIn onCheckLoggedIn={this.props.onCheckLoggedIn} onVerifyEmail={this.onVerifyEmail.bind(this)}/>
         }
       </View>
     );
