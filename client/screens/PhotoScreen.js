@@ -28,15 +28,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'relative',
     flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
+    flexDirection: 'row',
   },
   photo: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    flex: 1,
+    flex: 9,
   },
 });
 

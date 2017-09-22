@@ -19,7 +19,7 @@ export default class TouchToSpeakButton extends Component {
           position: 'absolute',
           top: top,
           left: left,
-          zIndex:5,
+          zIndex:10,
           width: 40,
           height: 40,
           borderRadius: 40,
