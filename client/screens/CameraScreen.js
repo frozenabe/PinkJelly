@@ -4,6 +4,7 @@ import {
   AWS_REGION,
   AWS_ACCESS_KEY,
   AWS_SECRET_KEY,
+  AWS_EC2,
 } from 'react-native-dotenv';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';

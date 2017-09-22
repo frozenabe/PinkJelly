@@ -29,12 +29,12 @@ parser.add_argument(
     '-a',
     '--anchors_path',
     help='path to anchors file, defaults to yolo_anchors.txt',
-    default='model_data/yolo_anchors.txt')
+    default='python_yolo/model_data/yolo_anchors.txt')
 parser.add_argument(
     '-c',
     '--classes_path',
     help='path to classes file, defaults to coco_classes.txt',
-    default='model_data/coco_classes.txt')
+    default='python_yolo/model_data/coco_classes.txt')
 # parser.add_argument(
 #     '-t',
 #     '--test_path',
@@ -50,7 +50,7 @@ parser.add_argument(
     '--score_threshold',
     type=float,
     help='threshold for bounding box scores, default .3',
-    default=.3)
+    default=.6)
 parser.add_argument(
     '-iou',
     '--iou_threshold',
@@ -151,8 +151,8 @@ def _main(args):
     image_data /= 255.
     image_data = np.expand_dims(image_data, 0)  # Add batch dimension.
 
-    out_boxes, out_classes = sess.run(  # out_scores x
-        [boxes, classes],   # scores x
+    out_boxes, out_scores, out_classes = sess.run(
+        [boxes, scores, classes],
         feed_dict={
             yolo_model.input: image_data,
             input_image_shape: [image.size[1], image.size[0]],
@@ -168,10 +168,11 @@ def _main(args):
     for i, j in reversed(list(enumerate(out_classes))):
         predicted_class = class_names[j]
         box = out_boxes[i]
-        # score = out_scores[i]
+        score = out_scores[i]
 
         # label = '{} {:.2f}'.format(predicted_class, score)
         label = '{}'.format(predicted_class)
+        # scores = '{%.2f}'.format(score)
 
         draw = ImageDraw.Draw(image)
         label_size = draw.textsize(label, font)
