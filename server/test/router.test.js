@@ -13,7 +13,7 @@ describe('router "get" test', function() {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.be.empty;
-          done();
+          done(); //not working yet
         });
     });
   });
