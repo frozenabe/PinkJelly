@@ -64,6 +64,12 @@ typings/
 yolo.cfg
 yolo.weights
 model_data/yolo.h5
-.vscode
+
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # End of https://www.gitignore.io/api/node
