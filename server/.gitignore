@@ -66,10 +66,10 @@ python_yolo/yolo.weights
 python_yolo/model_data/yolo.h5
 
 # vscode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+../.vscode/*
+!../.vscode/settings.json
+!../.vscode/tasks.json
+!../.vscode/launch.json
+!../.vscode/extensions.json
 
 # End of https://www.gitignore.io/api/node
