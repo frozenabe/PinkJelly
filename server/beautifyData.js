@@ -3,22 +3,24 @@ const beautifyData = (data) => {
   data = data.split(' ');
 
   let labelData = {};
-
+  
   if (data.length === 6) {
+    const xCoordinate = (parseInt(data[4]) - parseInt(data[2])) / 2 + parseInt(data[2]);
+    const yCoordinate = (parseInt(data[3]) - parseInt(data[5])) / 2 + parseInt(data[5]);
+    
     labelData = {
       label: `${data[0]} ${data[1]}`,
-      top: parseInt(data[2]),
-      right: parseInt(data[3]),
-      bottom: parseInt(data[4]),
-      left: parseInt(data[5]),
+      x: xCoordinate,
+      y: yCoordinate,
     }
   } else {
+    const xCoordinate = (parseInt(data[3]) - parseInt(data[1])) / 2 + parseInt(data[1]);
+    const yCoordinate = (parseInt(data[2]) - parseInt(data[4])) / 2 + parseInt(data[4]);
+
     labelData = {
       label: `${data[0]}`,
-      top: parseInt(data[1]),
-      right: parseInt(data[2]),
-      bottom: parseInt(data[3]),
-      left: parseInt(data[4]),
+      x: xCoordinate,
+      y: yCoordinate,
     }
   }
 

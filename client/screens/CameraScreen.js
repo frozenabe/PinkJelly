@@ -53,7 +53,7 @@ export default class CameraScreen extends Component {
       })
       .then(() => {
         this.props.setLoadingStatus(true);
-        axios.get('http://10.130.106.49:7080/')
+        axios.get(AWS_EC2)
           .then(res => {
             if (!res.data.length) {
               return alert(`We can't detect anything. /n Please take a new picture.`)

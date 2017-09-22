@@ -9,28 +9,22 @@ const processThruPython = (url) =>
       'python_yolo/model_data/yolo.h5'
     ]);
 
+    // recieve url from client and stdin.write to python run_yolo.py
+    const imageFromClient = JSON.stringify(url);
+    py.stdin.write(imageFromClient);
+    py.stdin.end();
+
+    // get outcome from run_yolo.py and send back data to client thru router.js
     const pythonOutput = [];
     py.stdout.on('data', (data) => {
       const labelData = beautifyData(data.toString('utf8'));
       pythonOutput.push(labelData);
     });
     py.stdout.on('end', function(){
+      console.log(pythonOutput)
       resolve(pythonOutput);
-      reject('eh');
+      reject('stdout malfunction');
     });
-
-    const imageFromClient = JSON.stringify(url);
-    py.stdin.write(imageFromClient);
-    py.stdin.end();
-
-    py.stdout.on('end', function(){
-      resolve(pythonOutput);
-      reject('eh');
-    });
-
-    const imageFromClient = JSON.stringify(url);
-    py.stdin.write(imageFromClient);
-    py.stdin.end();
 
     // py.stderr.on('data', (data) => {
     //   console.log(`stderr: ${data}`);
