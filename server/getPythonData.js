@@ -23,15 +23,6 @@ const processThruPython = (url) =>
     py.stdin.write(imageFromClient);
     py.stdin.end();
 
-    py.stdout.on('end', function(){
-      resolve(pythonOutput);
-      reject('eh');
-    });
-
-    const imageFromClient = JSON.stringify(url);
-    py.stdin.write(imageFromClient);
-    py.stdin.end();
-
     // py.stderr.on('data', (data) => {
     //   console.log(`stderr: ${data}`);
     // }); //****having issue with tensorflow backend err*****
