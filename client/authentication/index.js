@@ -13,7 +13,7 @@ export default class Authentication extends Component {
 
   componentDidMount() {
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
-    
+
   }
 
   onVerifyEmail() {
@@ -32,8 +32,8 @@ export default class Authentication extends Component {
       <View style={styles.wrapper}>
         {
           !emailVerification
-          ? <EmailVerify onVerifyEmail={this.onVerifyEmail.bind(this)}/>
-          : <SignIn onCheckLoggedIn={this.props.onCheckLoggedIn} onVerifyEmail={this.onVerifyEmail.bind(this)}/>
+            ? <EmailVerify onVerifyEmail={this.onVerifyEmail.bind(this)}/>
+            : <SignIn onCheckLoggedIn={this.props.onCheckLoggedIn} onVerifyEmail={this.onVerifyEmail.bind(this)}/>
         }
       </View>
     );

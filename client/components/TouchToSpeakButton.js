@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Speech } from 'expo';
 
@@ -10,7 +10,7 @@ export default class TouchToSpeakButton extends Component {
       language: en-US, rate: 0.6,
     })
   }
-  
+
   render() {
     const { top, left } = this.props;
     return (
