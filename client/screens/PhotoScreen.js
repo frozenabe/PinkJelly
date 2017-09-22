@@ -17,7 +17,7 @@ const PhotoScreen = ({imagePath, detectionData, setDetectionData}) => {
       {
         !imagePath
           ? <Loading/>
-          : <Image source={{uri: imagePath}} style={styles.imageComp}/>
+          : <Image source={{uri: imagePath}} style={styles.photo}/>
       }
       <ControlBar screen="PHOTO" setDetectionData={setDetectionData}/>
     </View>
@@ -26,10 +26,16 @@ const PhotoScreen = ({imagePath, detectionData, setDetectionData}) => {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    flex: 1,
     position: 'relative',
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
   },
-  imageComp: {
+  photo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
     flex: 1,
   },
 });
