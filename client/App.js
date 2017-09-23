@@ -47,12 +47,11 @@ export default class App extends Component {
     const { loggedIn } = this.state;
     return (
       <View style={styles.container}>
-        <Screens/>
-        {/* {
+        {
           loggedIn
           ? <Screens/>
           : <Authentication onCheckLoggedIn={this.onCheckLoggedIn.bind(this)}/>
-        } */}
+        }
       </View>
     );
   }
