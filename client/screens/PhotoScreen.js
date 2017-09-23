@@ -1,17 +1,27 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Dimensions, Image} from 'react-native';
 import TouchToSpeakButton from '../components/TouchToSpeakButton';
 import Loading from '../components/Loading';
 import ControlBar from '../components/ControlBar';
 
+const setObjectCoordinates = (originWidth, originHeight, x, y) => {
+  const {winH, winW} = Dimensions.get('window');
+  const adjustImageWidth = winW * 0.9;
+
+  const left = Math.floor((adjustImageWidth * x / originWidth) - 20);
+  const top = Math.floor((winH * y / originHeight) - 20);
+
+  return { left, top };
+};
 
 const PhotoScreen = ({imagePath, detectionData, setDetectionData}) => {
   return (
     <View style={styles.imageContainer}>
       {
          detectionData.map((obj, i) => {
-           const { label, x, y } = obj;
-           return <TouchToSpeakButton key={`${label}-${i}`} label={label} x={x} y={y}/>;
+           const { label, x, y, height, width } = obj;
+           const { left, top } = setObjectCoordinates(width, height, x, y);
+           return <TouchToSpeakButton key={`${label}-${i}`} label={label} left={left} top={top}/>;
         })
       }
       {
