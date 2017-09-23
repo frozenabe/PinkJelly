@@ -10,8 +10,8 @@ const PhotoScreen = ({imagePath, detectionData, setDetectionData}) => {
     <View style={styles.imageContainer}>
       {
          detectionData.map((obj, i) => {
-           const { label, top, left } = obj;
-           return <TouchToSpeakButton key={`${label}-${i}`} label={label} top={top} left={left}/>;
+           const { label, x, y } = obj;
+           return <TouchToSpeakButton key={`${label}-${i}`} label={label} x={x} y={y}/>;
         })
       }
       {

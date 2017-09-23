@@ -1,28 +1,46 @@
-const beautifyData = (data) => {
+const beautifyData = (data, imageSize) => {
+  const { 
+    height,
+    width,
+  } = imageSize;
+  let labelData = {};
+
   data = data.replace(/]|\[|\n|,/g, '');
   data = data.split(' ');
 
-  let labelData = {};
-  
   if (data.length === 6) {
-    const xCoordinate = (parseInt(data[4]) - parseInt(data[2])) / 2 + parseInt(data[2]);
-    const yCoordinate = (parseInt(data[3]) - parseInt(data[5])) / 2 + parseInt(data[5]);
+    const left = parseInt(data[2]);
+    const top = parseInt(data[3]);
+    const right = parseInt(data[4]);
+    const bottom = parseInt(data[5]);
+
+    const xCoordinate = Math.floor((right - left) / 2 + left);
+    const yCoordinate = Math.floor((top - bottom) / 2 + bottom);
     
     labelData = {
       label: `${data[0]} ${data[1]}`,
       x: xCoordinate,
       y: yCoordinate,
+      height,
+      width,
     }
   } else {
-    const xCoordinate = (parseInt(data[3]) - parseInt(data[1])) / 2 + parseInt(data[1]);
-    const yCoordinate = (parseInt(data[2]) - parseInt(data[4])) / 2 + parseInt(data[4]);
+    const left = parseInt(data[1]);
+    const top = parseInt(data[2]);
+    const right = parseInt(data[3]);
+    const bottom = parseInt(data[4]);
+
+    const xCoordinate = Math.floor((right - left) / 2 + left);
+    const yCoordinate = Math.floor((top - bottom) / 2 + bottom);
 
     labelData = {
-      label: `${data[0]}`,
+      label: data[0],
       x: xCoordinate,
       y: yCoordinate,
+      height,
+      width,
     }
-  }
+  };
 
   return labelData;
 };

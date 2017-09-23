@@ -1,37 +1,40 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Speech } from 'expo';
 
 export default class TouchToSpeakButton extends Component {
 
-  textToSpeech (text) {
-    Expo.Speech.speak(text, {
-      language: en-US, rate: 0.6,
+  textToSpeech(text) {
+    Speech.stop();
+    Speech.speak(text, {
+      language: 'en-US', rate: 0.7,
     })
   }
 
   render() {
-    const { top, left } = this.props;
+    const { label, x, y } = this.props;
+    
     return (
       <View
         style={{
           position: 'absolute',
-          top: top,
-          left: left,
+          top: x,
+          left: y,
           zIndex:10,
           width: 40,
           height: 40,
           borderRadius: 40,
-        }}
-        onPress={() => this.textToSpeech(this.props.label)}>
-        <Animatable.View
-          animation="zoomIn"
-          duration={1000}
-          easing="ease-out"
-          iterationCount="infinite"
-          style={styles.sonar}>
-        </Animatable.View>
+        }}>
+        <TouchableWithoutFeedback onPress={() => this.textToSpeech(label)}>
+          <Animatable.View
+            animation="zoomIn"
+            duration={1000}
+            easing="ease-out"
+            iterationCount="infinite"
+            style={styles.sonar}>
+          </Animatable.View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }

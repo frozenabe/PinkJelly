@@ -2,10 +2,3 @@ node_modules/
 .expo/
 npm-debug.*
 .env
-
-# vscode
-../.vscode/*
-!../.vscode/settings.json
-!../.vscode/tasks.json
-!../.vscode/launch.json
-!../.vscode/extensions.json
