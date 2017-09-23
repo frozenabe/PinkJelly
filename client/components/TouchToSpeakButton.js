@@ -13,14 +13,14 @@ export default class TouchToSpeakButton extends Component {
   }
 
   render() {
-    const { label, x, y } = this.props;
-    
+    const { label, left, top } = this.props;
+
     return (
       <View
         style={{
           position: 'absolute',
-          top: x,
-          left: y,
+          top: top,
+          left: left,
           zIndex:10,
           width: 40,
           height: 40,
