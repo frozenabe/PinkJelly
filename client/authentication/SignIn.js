@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, KeyboardAvoidingView  } from 'react-native';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
 import * as Animatable from 'react-native-animatable';
@@ -18,6 +18,7 @@ export default class SignIn extends Component{
 
   onSignIn() {
     const { email, password } = this.state;
+    const { onVerifyEmail, onCheckLoggedIn } = this.props;
     if (email === '') {
        this.setState({emailType: false})
     } else {
@@ -31,14 +32,14 @@ export default class SignIn extends Component{
     }
 
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(user => {
-          if (!user.emailVerified) {
-            this.props.onVerifyEmail();
-          } else {
-            this.props.onCheckLoggedIn();
-          }
-        })
-        .catch(err => console.log(err));
+      .then(user => {
+        if (!user.emailVerified) {
+          onVerifyEmail();
+        } else {
+          onCheckLoggedIn();
+        }
+      })
+      .catch(err => console.log(err));
   }
 
   setSignPage() {
@@ -55,7 +56,7 @@ export default class SignIn extends Component{
       return <SignUp setSignPage={this.setSignPage.bind(this)}/>;
     } else {
       return (
-        <View style={styles.signInContainer}>
+        <KeyboardAvoidingView style={styles.signInContainer} behavior="padding">
           <View style={styles.logoDistrict}>
             <Paw />
           </View>
@@ -87,7 +88,7 @@ export default class SignIn extends Component{
             <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#00796b"/>
             <Text onPress={() => this.setSignPage()} style={styles.signUp}>NEW ACCOUNT</Text>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       );
     }
   }

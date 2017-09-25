@@ -38,7 +38,7 @@ export default class App extends Component {
 
   onCheckLoggedIn() {
     const user = firebase.auth().currentUser;
-
+console.log(user);
     if (!user) {
       this.setState({loggedIn: false});
       ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
@@ -53,9 +53,9 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         {
-          loggedIn
-          ? <Screens/>
-          : <Authentication onCheckLoggedIn={this.onCheckLoggedIn.bind(this)}/>
+          !loggedIn
+            ? <Authentication onCheckLoggedIn={this.onCheckLoggedIn.bind(this)}/>
+            : <Screens/>
         }
       </View>
     );

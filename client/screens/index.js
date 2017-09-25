@@ -45,7 +45,7 @@ export default class Screens extends Component {
     const { isLoading, imagePath, detectionData } = this.state;
 
     if (isLoading) {
-      return <Text>asdasd</Text>;
+      return <Loading/>;
     } else if (!isLoading && detectionData.length) {
       return (
         <View style={styles.wrapper}>
