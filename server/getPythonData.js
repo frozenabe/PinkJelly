@@ -20,7 +20,6 @@ const getPythonData = (url) =>
           const labelData = beautifyData(data.toString('utf8'), imageSize);
           pythonOutput.push(labelData);
         }).on('end', function(){
-          console.log(pythonOutput)
           resolve(pythonOutput);
           reject('stdout malfunction');
         });

@@ -5,11 +5,10 @@ import Loading from '../components/Loading';
 import ControlBar from '../components/ControlBar';
 
 const setObjectCoordinates = (originWidth, originHeight, x, y) => {
-  const {winH, winW} = Dimensions.get('window');
-  const adjustImageWidth = winW * 0.9;
-
+  const { height, width } = Dimensions.get('window');
+  const adjustImageWidth = width * 0.9;
   const left = Math.floor((adjustImageWidth * x / originWidth) - 20);
-  const top = Math.floor((winH * y / originHeight) - 20);
+  const top = Math.floor((height * y / originHeight) - 20);
 
   return { left, top };
 };

@@ -1,18 +1,35 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, Image } from 'react-native';
+import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
 import * as Animatable from 'react-native-animatable';
 import SignUp from './SignUp';
+import Loading from '../components/Loading';
+import Paw from '../components/Paw';
 
 export default class SignIn extends Component{
   state = {
     email: '',
     password: '',
-    registered: false,
+    emailType: true,
+    passwordType: true,
+    register: false,
   };
 
   onSignIn() {
     const { email, password } = this.state;
+    if (email === '') {
+       this.setState({emailType: false})
+    } else {
+       this.setState({emailType: true})
+    }
+
+    if (password === '') {
+      this.setState({passwordType: false})
+    } else {
+      this.setState({passwordType: true})
+    }
+
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(user => {
           if (!user.emailVerified) {
@@ -26,21 +43,50 @@ export default class SignIn extends Component{
 
   setSignPage() {
     this.setState({
-      registered: !this.state.registered,
+      emailType: true,
+      passwordType: true,
+      register: !this.state.register,
     });
   }
 
   render() {
-    const { registered } = this.state;
-    if (registered) {
+    const { register, emailType, passwordType } = this.state;
+    if (register) {
       return <SignUp setSignPage={this.setSignPage.bind(this)}/>;
     } else {
       return (
-        <View style={styles.registerContainer}>
-          <TextInput style={styles.inputStyle} placeholder="email" onChangeText={value => this.setState({email: value})}/>
-          <TextInput style={styles.inputStyle} placeholder="password" onChangeText={value => this.setState({password: value})}/>
-          <Button onPress={() => this.onSignIn()} title="login" color="#841584" accessibilityLabel="Learn more about this purple button"/>
-          <Text onPress={() => this.setSignPage()}>New Account</Text>
+        <View style={styles.signInContainer}>
+          <View style={styles.logoDistrict}>
+            <Paw />
+          </View>
+          <View style={styles.loginForm}>
+            <FormInput
+              onChangeText={value => {this.setState({email: value})}}
+              placeholder="EMAIL ADDRESS"
+              placeholderTextColor="#00796b"
+              containerStyle={styles.inputContainerStyle}
+              inputStyle={styles.inputStyle}
+            />
+            {(!emailType)
+              ? <FormValidationMessage>Email을 입력해주세요</FormValidationMessage>
+              : null
+            }
+            <FormInput
+              onChangeText={value => this.setState({password: value})}
+              placeholder="PASSWORD"
+              placeholderTextColor="#00796b"
+              containerStyle={styles.inputContainerStyle}
+              inputStyle={styles.inputStyle}
+              secureTextEntry
+            />
+            {(!passwordType)
+              ? <FormValidationMessage>Password을 입력해주세요</FormValidationMessage>
+              : null
+            }
+
+            <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#00796b"/>
+            <Text onPress={() => this.setSignPage()} style={styles.signUp}>NEW ACCOUNT</Text>
+          </View>
         </View>
       );
     }
@@ -48,15 +94,36 @@ export default class SignIn extends Component{
 }
 
 const styles = StyleSheet.create({
-  registerContainer: {
+  signInContainer: {
+    flex: 1,
+    backgroundColor: '#64ffda',
+  },
+  logoDistrict: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 32,
+  },
+  loginForm: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  inputContainerStyle: {
+    marginBottom: 16,
+    borderBottomColor: '#00796b',
   },
   inputStyle: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
+    color: '#222',
+    fontWeight: '100',
+  },
+  buttonStyle: {
+    marginVertical: 16,
     borderWidth: 1,
+    borderColor: '#00796b',
+    borderRadius: 100,
+  },
+  signUp: {
+    textAlign: 'center',
+    color: '#555',
   },
 });
