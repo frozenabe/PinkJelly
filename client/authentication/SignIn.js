@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, Image } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
 import * as Animatable from 'react-native-animatable';
 import SignUp from './SignUp';
-import { AWS_S3_LOADING_IMAGE_URL } from 'react-native-dotenv';
+import Loading from '../components/Loading';
+import Paw from '../components/Paw';
 
 export default class SignIn extends Component{
   state = {
@@ -12,7 +13,7 @@ export default class SignIn extends Component{
     password: '',
     emailType: true,
     passwordType: true,
-    registered: false,
+    register: false,
   };
 
   onSignIn() {
@@ -44,41 +45,48 @@ export default class SignIn extends Component{
     this.setState({
       emailType: true,
       passwordType: true,
-      registered: !this.state.registered,
+      register: !this.state.register,
     });
   }
 
   render() {
-    const { registered, emailType, passwordType } = this.state;
-    if (registered) {
+    const { register, emailType, passwordType } = this.state;
+    if (register) {
       return <SignUp setSignPage={this.setSignPage.bind(this)}/>;
     } else {
       return (
-        <View style={styles.registerContainer}>
-          <Image
-            source={{ uri: AWS_S3_LOADING_IMAGE_URL }}
-            style={styles.loadingLogo}
-            resizeMode="cover"
-          />
-          <FormInput
-            onChangeText={value => {this.setState({email: value})}}
-            placeholder="Email Address"
+        <View style={styles.signInContainer}>
+          <View style={styles.logoDistrict}>
+            <Paw />
+          </View>
+          <View style={styles.loginForm}>
+            <FormInput
+              onChangeText={value => {this.setState({email: value})}}
+              placeholder="EMAIL ADDRESS"
+              placeholderTextColor="#00796b"
+              containerStyle={styles.inputContainerStyle}
+              inputStyle={styles.inputStyle}
             />
-          {(!emailType)
-            ? <FormValidationMessage>Email을 입력해주세요</FormValidationMessage>
-            : null
-          }
-          <FormInput
-            onChangeText={value => this.setState({password: value})}
-            placeholder="Password"
-            secureTextEntry
+            {(!emailType)
+              ? <FormValidationMessage>Email을 입력해주세요</FormValidationMessage>
+              : null
+            }
+            <FormInput
+              onChangeText={value => this.setState({password: value})}
+              placeholder="PASSWORD"
+              placeholderTextColor="#00796b"
+              containerStyle={styles.inputContainerStyle}
+              inputStyle={styles.inputStyle}
+              secureTextEntry
             />
-          {(!passwordType)
-            ? <FormValidationMessage>Password을 입력해주세요</FormValidationMessage>
-            : null
-          }
-          <Button onPress={() => this.onSignIn()} title="로그인" color='black' backgroundColor='white'/>
-          <Button onPress={() => this.setSignPage()} title='회원가입' color='black' backgroundColor='white'/>
+            {(!passwordType)
+              ? <FormValidationMessage>Password을 입력해주세요</FormValidationMessage>
+              : null
+            }
+
+            <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#00796b"/>
+            <Text onPress={() => this.setSignPage()} style={styles.signUp}>NEW ACCOUNT</Text>
+          </View>
         </View>
       );
     }
@@ -86,18 +94,36 @@ export default class SignIn extends Component{
 }
 
 const styles = StyleSheet.create({
-  registerContainer: {
+  signInContainer: {
+    flex: 1,
+    backgroundColor: '#64ffda',
+  },
+  logoDistrict: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 32,
+  },
+  loginForm: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  inputContainerStyle: {
+    marginBottom: 16,
+    borderBottomColor: '#00796b',
   },
   inputStyle: {
-    width: '100%',
-    height: 40,
+    color: '#222',
+    fontWeight: '100',
   },
-  loadingLogo: {
-    bottom: 80,
-    width: 200,
-    height: 200,
-  }
+  buttonStyle: {
+    marginVertical: 16,
+    borderWidth: 1,
+    borderColor: '#00796b',
+    borderRadius: 100,
+  },
+  signUp: {
+    textAlign: 'center',
+    color: '#555',
+  },
 });

@@ -1,17 +1,14 @@
-import { AWS_S3_LOADING_IMAGE_URL } from 'react-native-dotenv';
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
+
+import Paw from './Paw';
 
 export default class Loading extends Component {
 
   render() {
     return (
       <View style={styles.loading}>
-        <Image
-          source={{ uri: AWS_S3_LOADING_IMAGE_URL }}
-          style={styles.loadingLogo}
-          resizeMode="cover"
-        />
+        <Paw/>
       </View>
     );
   }
@@ -23,9 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#ffe57f',
   },
-  loadingLogo: {
-    width: 200,
-    height: 200,    
-  }
 });

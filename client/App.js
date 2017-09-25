@@ -38,9 +38,14 @@ export default class App extends Component {
 
   onCheckLoggedIn() {
     const user = firebase.auth().currentUser;
-    (!user)
-      ? this.setState({loggedIn: false})
-      : this.setState({loggedIn: true});
+
+    if (!user) {
+      this.setState({loggedIn: false});
+      ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+    } else {
+      this.setState({loggedIn: true});
+      ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
+    }
   }
 
   render() {
