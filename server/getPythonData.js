@@ -6,7 +6,7 @@ const getPythonData = (url) =>
   new Promise((resolve, reject) => {
     getImageSize(url)
       .then((imageSize) => {
-        const py = spawn('python', [
+        const py = spawn('python3', [
           'python_yolo/run_yolo.py',
           'python_yolo/model_data/yolo.h5'
         ]);
@@ -19,7 +19,7 @@ const getPythonData = (url) =>
         py.stdout.on('data', (data) => {
           const labelData = beautifyData(data.toString('utf8'), imageSize);
           pythonOutput.push(labelData);
-        }).on('end', function(){
+        }).on('end', function() {
           resolve(pythonOutput);
           reject('stdout malfunction');
         });
