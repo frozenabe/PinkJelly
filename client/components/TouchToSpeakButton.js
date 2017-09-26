@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native';
+import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
 import { Speech } from 'expo';
 
@@ -49,3 +50,8 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
 });
+TouchToSpeakButton.propTypes = {
+  label: PropTypes.string,
+  top: PropTypes.number,
+  left: PropTypes.number,
+};

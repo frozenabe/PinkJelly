@@ -8,6 +8,7 @@ import {
 } from 'react-native-dotenv';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 import { Camera, Permissions, ScreenOrientation } from 'expo';
 import axios from 'axios';
 import { RNS3 } from 'react-native-aws3';
@@ -26,6 +27,7 @@ export default class CameraScreen extends Component {
   }
 
   snapshot() {
+    const { setImagePath, setLoadingStatus, setDetectionData } = this.props;
     this.camera.takePictureAsync()
       .then(data => {
         const file = {
@@ -49,18 +51,18 @@ export default class CameraScreen extends Component {
           }
           console.log(response.body);
         });
-        this.props.setImagePath(data);
+        setImagePath(data);
       })
       .then(() => {
-        this.props.setLoadingStatus(true);
+        setLoadingStatus(true);
         axios.get(AWS_EC2)
           .then(res => {
             if (!res.data.length) {
               return alert(`We can't detect anything. /n Please take a new picture.`)
             }
-            this.props.setDetectionData(res.data);
+            setDetectionData(res.data);
           })
-          .then(() => this.props.setLoadingStatus(false))
+          .then(() => setLoadingStatus(false))
           .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
@@ -99,3 +101,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
 });
+
+CameraScreen.propTypes = {
+  setImagePath: PropTypes.func,
+  setLoadingStatus: PropTypes.func,
+  setDetectionData: PropTypes.func,
+};

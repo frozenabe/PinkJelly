@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
+import PropTypes from 'prop-types';
 
 const EmailVerify = ({onVerifyEmail}) => {
 
@@ -21,5 +22,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+EmailVerify.propTypes = {
+  onVerifyEmail: PropTypes.func,
+};
 
 export default EmailVerify;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, Image } from 'react-native';
+import PropTypes from 'prop-types';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
 import Paw from '../components/Paw';
@@ -142,3 +143,7 @@ const styles = StyleSheet.create({
     color: '#555',
   },
 });
+
+SignUp.propTypes = {
+  setSignPage: PropTypes.func,
+};

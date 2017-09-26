@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
+import PropTypes from 'prop-types';
 import { SimpleLineIcons, Entypo } from '@expo/vector-icons';
 
 const ControlBar = ({ screen, snapshot, setDetectionData }) => {
@@ -44,5 +45,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
 });
+
+ControlBar.propTypes = {
+  screen: PropTypes.string,
+  snapshot: PropTypes.func,
+  setDetectionData: PropTypes.func,
+};
 
 export default ControlBar;
