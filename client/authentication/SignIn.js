@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, KeyboardAvoidingView  } from 'react-native';
+import PropTypes from 'prop-types';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
 import * as Animatable from 'react-native-animatable';
@@ -128,3 +129,8 @@ const styles = StyleSheet.create({
     color: '#555',
   },
 });
+
+SignIn.propTypes = {
+  onVerifyEmail: PropTypes.func,
+  onCheckLoggedIn: PropTypes.func,
+};

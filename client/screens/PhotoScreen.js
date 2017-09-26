@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Dimensions, Image} from 'react-native';
+import PropTypes from 'prop-types';
 import TouchToSpeakButton from '../components/TouchToSpeakButton';
 import Loading from '../components/Loading';
 import ControlBar from '../components/ControlBar';
@@ -43,5 +44,11 @@ const styles = StyleSheet.create({
     flex: 9,
   },
 });
+
+PhotoScreen.propTypes = {
+  imagePath: PropTypes.string,
+  detectionData: PropTypes.array,
+  setDetectionData: PropTypes.func,
+};
 
 export default PhotoScreen;

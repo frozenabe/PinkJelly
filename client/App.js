@@ -8,7 +8,6 @@ import {
 } from 'react-native-dotenv';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Swiper from 'react-native-swiper';
 import { ScreenOrientation } from 'expo';
 import * as firebase from 'firebase';
 
@@ -38,13 +37,13 @@ export default class App extends Component {
 
   onCheckLoggedIn() {
     const user = firebase.auth().currentUser;
-console.log(user);
+
     if (!user) {
       this.setState({loggedIn: false});
       ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
     } else {
       this.setState({loggedIn: true});
-      ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE);
+      ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
     }
   }
 

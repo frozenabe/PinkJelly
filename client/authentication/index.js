@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import { ScreenOrientation } from 'expo';
 import * as firebase from 'firebase';
 
@@ -27,13 +28,14 @@ export default class Authentication extends Component {
 
   render() {
     const { emailVerification } = this.state;
+    const { onCheckLoggedIn } = this.props;
     // console.log(!firebase.auth().currentUser.emailVerified);
     return (
       <View style={styles.wrapper}>
         {
           !emailVerification
             ? <EmailVerify onVerifyEmail={this.onVerifyEmail.bind(this)}/>
-            : <SignIn onCheckLoggedIn={this.props.onCheckLoggedIn} onVerifyEmail={this.onVerifyEmail.bind(this)}/>
+            : <SignIn onCheckLoggedIn={onCheckLoggedIn} onVerifyEmail={this.onVerifyEmail.bind(this)}/>
         }
       </View>
     );
@@ -46,3 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+Authentication.propTypes = {
+  onCheckLoggedIn: PropTypes.func,
+};

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
 
 export default class PawFinger extends Component {
@@ -33,3 +34,11 @@ const styles = StyleSheet.create({
      backgroundColor: '#ff80ab',
   },
 });
+
+PawFinger.propTypes = {
+  rotate: PropTypes.string,
+  scale: PropTypes.number,
+  top: PropTypes.number,
+  left: PropTypes.number,
+  zIndex: PropTypes.number,
+};
