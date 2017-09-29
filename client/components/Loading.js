@@ -16,16 +16,15 @@ export default class Loading extends Component {
     let progress = 0;
     this.setState({ progress });
     setTimeout(() => {
-      if (this.state.progress < 1) {
-        setInterval(() => {
-          progress += Math.random() / 5;
-          if (progress > 1) {
-            progress = 1;
-          }
-          this.setState({ progress });
-        }, 500);
-      }
-    }, 500);
+      const progressing = setInterval(() => {
+        progress += Math.random() / 5;
+        if (progress > 1) {
+          progress = 1;
+          clearInterval(progressing);          
+       }
+        this.setState({ progress });
+      }, 500);
+    }, 1000);
   }
 
   render() {

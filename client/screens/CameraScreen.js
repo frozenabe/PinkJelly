@@ -30,39 +30,42 @@ export default class CameraScreen extends Component {
     const { setImagePath, setLoadingStatus, setDetectionData } = this.props;
     const user = firebase.auth().currentUser;
 
-    if (this.camera) {
-      this.camera.takePictureAsync()
-        .then(data => {
-          const file = {
-            uri: data,
-            name: `${user.email}-image.jpg`,
-            type: "image/jpg"
+    this.camera.takePictureAsync()
+      .then(data => {
+        const file = {
+          uri: data.uri,
+          name: `${user.email}-image.jpg`,
+          type: "image/jpg"
+        }
+
+        const options = {
+          keyPrefix: AWS_S3_KEY_PREFIX,
+          bucket: AWS_S3_BUCKET_NAME,
+          region: AWS_REGION,
+          accessKey: AWS_ACCESS_KEY,
+          secretKey: AWS_SECRET_KEY,
+          successActionStatus: 201,
+        }
+        setImagePath(data.uri);
+
+        return RNS3.put(file, options).then(response => {
+          if (response.status !== 201) {
+            throw new Error("Failed to upload image to S3");
           }
-
-          const options = {
-            keyPrefix: AWS_S3_KEY_PREFIX,
-            bucket: AWS_S3_BUCKET_NAME,
-            region: AWS_REGION,
-            accessKey: AWS_ACCESS_KEY,
-            secretKey: AWS_SECRET_KEY,
-            successActionStatus: 201,
-          }
-
-          RNS3.put(file, options)
-            .then(response => {
-              if (response.status !== 201) {
-                throw new Error("Failed to upload image to S3");
-              }
-              console.log(response.body);
-            })
-            .catch(err => console.log(err));
-
-          setImagePath(data);
+          console.log(response.body);
+        });
+      })
+      .then(() => {
+        setLoadingStatus(true);
+        axios.post(AWS_EC2, {
+          userEmail: user.email,
         })
-        .then(() => {
-          setLoadingStatus(true);
-          axios.post(AWS_EC2, {
-            userEmail: user.email,
+          .then(res => {
+            console.log(res);
+            if (!res.data.length) {
+              return alert(`We can't detect anything. /n Please take a new picture.`)
+            }
+            setDetectionData(res.data);
           })
             .then(res => {
               if (!res.data.length) {
