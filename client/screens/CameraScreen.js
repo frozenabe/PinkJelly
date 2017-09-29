@@ -32,8 +32,9 @@ export default class CameraScreen extends Component {
 
     this.camera.takePictureAsync()
       .then(data => {
+        console.log(data);
         const file = {
-          uri: data,
+          uri: data.uri,
           name: `${user.email}-image.jpg`,
           type: "image/jpg"
         }
@@ -46,14 +47,14 @@ export default class CameraScreen extends Component {
           secretKey: AWS_SECRET_KEY,
           successActionStatus: 201,
         }
+        setImagePath(data.uri);
 
-        RNS3.put(file, options).then(response => {
+        return RNS3.put(file, options).then(response => {
           if (response.status !== 201) {
             throw new Error("Failed to upload image to S3");
           }
           console.log(response.body);
         });
-        setImagePath(data);
       })
       .then(() => {
         setLoadingStatus(true);
@@ -61,6 +62,7 @@ export default class CameraScreen extends Component {
           userEmail: user.email,
         })
           .then(res => {
+            console.log(res);
             if (!res.data.length) {
               return alert(`We can't detect anything. /n Please take a new picture.`)
             }
