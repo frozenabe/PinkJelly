@@ -1,13 +1,26 @@
 const { exec } = require('child_process');
 const path = require('path');
 const beautifyData = require('./beautifyData');
-const getImageSize = require('./getImageSize')
+const getImageSize = require('./getImageSize');
+const fs = require('fs');
+const request = require('request');
 
-const runDarknet = (cache) => 
+const download = (uri, filename, callback) => {
+  request.head(uri, function(err, res, body){
+    console.log('content-type:', res.headers['content-type']);
+    console.log('content-length:', res.headers['content-length']);
+
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  });
+};
+
+const runDarknet = (userEmail, imageUrlS3) => 
   new Promise((resolve, reject) => {
-    getImageSize(cache)
+    download(imageUrlS3, `./darknet/${userEmail}-super.jpg`, () => console.log('done'));
+    getImageSize(imageUrlS3)
     .then((imageSize) => {
-      const dark = exec(`./darknet detector test cfg/combine9k.data cfg/yolo9000.cfg yolo9000.weights ${cache}`, {
+
+      const dark = exec(`./darknet detector test cfg/combine9k.data cfg/yolo9000.cfg yolo9000.weights ${userEmail}-super.jpg`, {
         cwd: path.join(__dirname, './darknet'),
       });
       
@@ -28,6 +41,5 @@ const runDarknet = (cache) =>
       })
     })
   })
-  
   
 module.exports = runDarknet;
