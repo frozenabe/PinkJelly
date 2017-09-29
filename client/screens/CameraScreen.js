@@ -54,14 +54,11 @@ export default class CameraScreen extends Component {
           console.log(response.body);
         });
         setImagePath(data);
-
-        return data;
       })
-      .then((imagePath) => {
+      .then(() => {
         setLoadingStatus(true);
         axios.post(AWS_EC2, {
           userEmail: user.email,
-          cache: imagePath,
         })
           .then(res => {
             if (!res.data.length) {
