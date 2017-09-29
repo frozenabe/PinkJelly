@@ -9,12 +9,12 @@ import {
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { Camera, Permissions, ScreenOrientation } from 'expo';
+import { Camera, Permissions } from 'expo';
+import * as firebase from 'firebase';
 import axios from 'axios';
 import { RNS3 } from 'react-native-aws3';
 
 import ControlBar from '../components/ControlBar';
-
 
 export default class CameraScreen extends Component {
   state = {
@@ -28,11 +28,13 @@ export default class CameraScreen extends Component {
 
   snapshot() {
     const { setImagePath, setLoadingStatus, setDetectionData } = this.props;
+    const user = firebase.auth().currentUser;
+
     this.camera.takePictureAsync()
       .then(data => {
         const file = {
           uri: data,
-          name: "image.jpg",
+          name: `${user.email}-image.jpg`,
           type: "image/jpg"
         }
 
@@ -52,10 +54,15 @@ export default class CameraScreen extends Component {
           console.log(response.body);
         });
         setImagePath(data);
+
+        return data;
       })
-      .then(() => {
+      .then((imagePath) => {
         setLoadingStatus(true);
-        axios.get(AWS_EC2)
+        axios.post(AWS_EC2, {
+          userEmail: user.email,
+          cache: imagePath,
+        })
           .then(res => {
             if (!res.data.length) {
               return alert(`We can't detect anything. /n Please take a new picture.`)
@@ -78,7 +85,7 @@ export default class CameraScreen extends Component {
     } else {
       return (
         <View style={styles.screenContainer}>
-          <Camera ref={ref => {this.camera = ref;}} style={styles.camera}/>
+          <Camera ref={ref => { this.camera = ref; }} style={styles.camera}/>
           <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)}/>
         </View>
       );
