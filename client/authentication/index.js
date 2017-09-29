@@ -12,11 +12,6 @@ export default class Authentication extends Component {
     emailVerification: true,
   };
 
-  componentDidMount() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
-
-  }
-
   onVerifyEmail() {
     firebase.auth().signOut()
       .then(() => {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { ScreenOrientation } from 'expo';
 
 import Loading from '../components/Loading';
 import CameraScreen from './CameraScreen';
@@ -12,10 +11,6 @@ export default class Screens extends Component {
     isLoading: false,
     imagePath: '',
     detectionData: [],
-  }
-
-  componentDidMount() {
-    ScreenOrientation.allow(ScreenOrientation.Orientation.ALL);
   }
 
   setImagePath(path) {

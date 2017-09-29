@@ -38,12 +38,21 @@ export default class App extends Component {
   onCheckLoggedIn() {
     const user = firebase.auth().currentUser;
 
+    // if (!user) {
+    //   this.setState({loggedIn: false});
+    //   ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+    // } else {
+    //   this.setState({loggedIn: true});
+    //   ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+    // }
     if (!user) {
       this.setState({loggedIn: false});
-      ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+      ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+
     } else {
       this.setState({loggedIn: true});
-      ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+      ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
+
     }
   }
 
