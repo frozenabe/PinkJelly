@@ -32,8 +32,9 @@ export default class CameraScreen extends Component {
 
     this.camera.takePictureAsync()
       .then(data => {
+        const { uri } = data;
         const file = {
-          uri: data.uri,
+          uri: uri,
           name: `${user.email}-image.jpg`,
           type: "image/jpg"
         }
@@ -46,7 +47,7 @@ export default class CameraScreen extends Component {
           secretKey: AWS_SECRET_KEY,
           successActionStatus: 201,
         }
-        setImagePath(data.uri);
+        setImagePath(uri);
 
         return RNS3.put(file, options).then(response => {
           if (response.status !== 201) {
