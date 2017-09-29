@@ -20,7 +20,7 @@ export default class Loading extends Component {
         progress += Math.random() / 5;
         if (progress > 1) {
           progress = 1;
-          clearInterval(progressing);
+          clearInterval(progressing);          
        }
         this.setState({ progress });
       }, 500);

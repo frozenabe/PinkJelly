@@ -32,7 +32,6 @@ export default class CameraScreen extends Component {
 
     this.camera.takePictureAsync()
       .then(data => {
-        console.log(data);
         const file = {
           uri: data.uri,
           name: `${user.email}-image.jpg`,
@@ -68,10 +67,17 @@ export default class CameraScreen extends Component {
             }
             setDetectionData(res.data);
           })
-          .then(() => setLoadingStatus(false))
-          .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
+            .then(res => {
+              if (!res.data.length) {
+                return alert(`We can't detect anything. Please take a new picture.`)
+              }
+              setDetectionData(res.data);
+            })
+            .then(() => setLoadingStatus(false))
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+    }
   }
 
   render() {
