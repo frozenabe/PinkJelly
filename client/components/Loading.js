@@ -20,7 +20,7 @@ export default class Loading extends Component {
         progress += Math.random() / 5;
         if (progress > 1) {
           progress = 1;
-          clearInterval(progressing);          
+          clearInterval(progressing);
        }
         this.setState({ progress });
       }, 500);
@@ -37,7 +37,7 @@ export default class Loading extends Component {
             progress={progress}
             width={200}
             color="#fff"
-            unfilledColor="#64ffda"
+            unfilledColor="#82b1ff"
             borderColor="#fff"
           />
         </View>
@@ -52,9 +52,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#64ffda',
+    backgroundColor: '#82b1ff',
   },
   progressBarPosition: {
-    marginTop: 16,
+    marginTop: 32,
   }
 });

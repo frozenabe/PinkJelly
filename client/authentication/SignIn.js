@@ -65,7 +65,7 @@ export default class SignIn extends Component{
             <FormInput
               onChangeText={value => {this.setState({email: value})}}
               placeholder="EMAIL ADDRESS"
-              placeholderTextColor="#00796b"
+              placeholderTextColor="#fff"
               containerStyle={styles.inputContainerStyle}
               inputStyle={styles.inputStyle}
             />
@@ -76,7 +76,7 @@ export default class SignIn extends Component{
             <FormInput
               onChangeText={value => this.setState({password: value})}
               placeholder="PASSWORD"
-              placeholderTextColor="#00796b"
+              placeholderTextColor="#fff"
               containerStyle={styles.inputContainerStyle}
               inputStyle={styles.inputStyle}
               secureTextEntry
@@ -86,7 +86,7 @@ export default class SignIn extends Component{
               : null
             }
 
-            <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#00796b"/>
+            <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
             <Text onPress={() => this.setSignPage()} style={styles.signUp}>NEW ACCOUNT</Text>
           </View>
         </KeyboardAvoidingView>
@@ -98,7 +98,7 @@ export default class SignIn extends Component{
 const styles = StyleSheet.create({
   signInContainer: {
     flex: 1,
-    backgroundColor: '#64ffda',
+    backgroundColor: '#82b1ff',
   },
   logoDistrict: {
     flex: 1,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   inputContainerStyle: {
     marginBottom: 16,
-    borderBottomColor: '#00796b',
+    borderBottomColor: '#fff',
   },
   inputStyle: {
     color: '#222',
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   buttonStyle: {
     marginVertical: 16,
     borderWidth: 1,
-    borderColor: '#00796b',
+    borderColor: '#fff',
     borderRadius: 100,
   },
   signUp: {

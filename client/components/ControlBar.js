@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 4,
-    backgroundColor: '#1abc9c',
+    backgroundColor: '#82b1ff',
   },
   circle: {
     alignItems: 'center',

@@ -5,7 +5,7 @@ import * as Animatable from 'react-native-animatable';
 
 export default class PawFinger extends Component {
   render() {
-    const { rotate, scale, top, left, zIndex } = this.props;
+    const { rotate, scale, top, left, zIndex, delay } = this.props;
     const style = {
       position: 'absolute',
       top,
@@ -16,9 +16,10 @@ export default class PawFinger extends Component {
 
     return (
       <View style={style}>
-        <TouchableWithoutFeedback onPress={() => this.refs.palm.rubberBand(400)}>
+        <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite" duration={800} delay={delay} style={styles.pawFinger} />
+        {/* <TouchableWithoutFeedback onPress={() => this.refs.palm.rubberBand(400)}>
           <Animatable.View ref="palm" style={styles.pawFinger} ></Animatable.View>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback> */}
       </View>
     );
   }

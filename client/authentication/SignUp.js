@@ -69,7 +69,7 @@ export default class SignUp extends Component{
           <FormInput
             onChangeText={value => {this.setState({email: value})}}
             placeholder="EMAIL ADDRESS"
-            placeholderTextColor="#00796b"
+            placeholderTextColor="#fff"
             containerStyle={styles.inputContainerStyle}
             inputStyle={styles.inputStyle}
           />
@@ -80,7 +80,7 @@ export default class SignUp extends Component{
           <FormInput
             onChangeText={value => this.setState({password: value})}
             placeholder="PASSWORD"
-            placeholderTextColor="#00796b"
+            placeholderTextColor="#fff"
             containerStyle={styles.inputContainerStyle}
             inputStyle={styles.inputStyle}
             secureTextEntry
@@ -92,7 +92,7 @@ export default class SignUp extends Component{
           <FormInput
             onChangeText={value => this.onConfirmPassword(value)}
             placeholder="CONFIRM PASSWORD"
-            placeholderTextColor="#00796b"
+            placeholderTextColor="#fff"
             containerStyle={styles.inputContainerStyle}
             inputStyle={styles.inputStyle}
             secureTextEntry
@@ -101,7 +101,7 @@ export default class SignUp extends Component{
             ? <FormValidationMessage>Password가 다르거나 입력되지 않았습니다</FormValidationMessage>
             : null
           }
-          <Button small onPress={() => this.onSignUp()} title="SIGN UP" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#00796b"/>
+          <Button small onPress={() => this.onSignUp()} title="SIGN UP" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
           <Text onPress={() => setSignPage()} style={styles.backToSignIn}>BACK TO SIGNIN</Text>
         </View>
       </View>
@@ -112,7 +112,7 @@ export default class SignUp extends Component{
 const styles = StyleSheet.create({
   signUpContainer: {
     flex: 1,
-    backgroundColor: '#64ffda',
+    backgroundColor: '#82b1ff',
   },
   logoDistrict: {
     flex: 1,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   inputContainerStyle: {
     marginBottom: 16,
-    borderBottomColor: '#00796b',
+    borderBottomColor: '#fff',
   },
   inputStyle: {
     color: '#222',
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   buttonStyle: {
     marginVertical: 16,
     borderWidth: 1,
-    borderColor: '#00796b',
+    borderColor: '#fff',
     borderRadius: 100,
   },
   backToSignIn: {
