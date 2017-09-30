@@ -3,10 +3,9 @@ const chaiAsPromised = require("chai-as-promised");
 const chaiHttp = require('chai-http');
 
 const app = require('../index');
-const getPythonData = require('../getPythonData')
 const beautifyData = require('../beautifyData');
 const getImageSize = require('../getImageSize');
-const processThruPython = require('../getPythonData');
+const runDarknet = require('../runDarknet');
 const testEmail = 'test%40test.com'
 const imageUrlS3 = `${process.env.AWS_S3_BUCKET_IMAGE_URL}/${testEmail}-image.jpg`;
 
@@ -26,22 +25,14 @@ describe('#scenarios for getting image from S3', () => {
 
 describe('#functions in this server', () => {
 
-  const data = ['/ \n \ , John Doe [1371.0, 13.0] [1642.0, 132.0]'].toString('utf8');
+  const data = 'one 69, 161, 252, 310\none two 911, 202, 1057, 411\none two three 431, 213, 1422, 123\none two three four 100, 200, 300, 400\none two three four five 100, 200, 300, 400\none two three four five six 100, 200, 300, 400\none two three four five six seven 100, 200, 300, 400\n';
   const imageSize = { height: 100, width: 100 };
 
   describe('beautifyData', () => {
 
     it('should export a function that returns an object', () => {
       expect(beautifyData).to.be.a('function');
-      expect(beautifyData(data, imageSize)).to.be.an('object');
-    });
-
-    it('should return object with properties of "label" , "x", "y", "height", "width"', () => {
-      expect(beautifyData(data, imageSize)).to.have.property('label');
-      expect(beautifyData(data, imageSize)).to.have.property('x');
-      expect(beautifyData(data, imageSize)).to.have.property('y');
-      expect(beautifyData(data, imageSize)).to.have.property('height');
-      expect(beautifyData(data, imageSize)).to.have.property('width');
+      expect(beautifyData(data, imageSize)).to.be.an('array');
     });
   });
 
@@ -55,6 +46,10 @@ describe('#functions in this server', () => {
     });
   });
 
+  it('should throw error on wrong info', () => {
+    
+  });
+
 });
 
 describe('#POST check', () => {
@@ -64,12 +59,12 @@ describe('#POST check', () => {
     .post('/')
     .end((err, res) => {
       expect(res).to.have.status(200),
-      processThruPython(imageUrlS3).should.eventually.be.an('array');
-      processThruPython(imageUrlS3).should.eventually.have.property('label');
-      processThruPython(imageUrlS3).should.eventually.have.property('x');
-      processThruPython(imageUrlS3).should.eventually.have.property('y');
-      processThruPython(imageUrlS3).should.eventually.have.property('height');
-      processThruPython(imageUrlS3).should.eventually.have.property('width');
+      runDarknet(testEmail).should.eventually.be.an('array');
+      runDarknet(testEmail).should.eventually.have.property('label');
+      runDarknet(testEmail).should.eventually.have.property('x');
+      runDarknet(testEmail).should.eventually.have.property('y');
+      runDarknet(testEmail).should.eventually.have.property('height');
+      runDarknet(testEmail).should.eventually.have.property('width');
       done();
     });
   }).timeout(20000);   

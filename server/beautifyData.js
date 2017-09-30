@@ -8,14 +8,13 @@ const beautifyData = (data, imageSize) => {
   data.forEach(eachData => {
     eachData = eachData.split(' ');
     eachData.pop();
-    newData.push(eachData)
-
-  })
-  console.log(newData)
+    newData.push(eachData);
+  });
 
   const { height, width } = imageSize;
   let labelData = {};
   const resultArray = [];
+
   for (let i = 0; i < newData.length; i += 1) {
     if (newData[i].length === 5) {
       const dataPosition = [
@@ -36,7 +35,8 @@ const beautifyData = (data, imageSize) => {
         height,
         width,
       }
-      resultArray.push(labelData)
+
+      resultArray.push(labelData);
     } else if (newData[i].length === 6) {
       const dataPosition = [
         parseInt(newData[i][2]), 
@@ -56,7 +56,8 @@ const beautifyData = (data, imageSize) => {
         height,
         width,
       }
-      resultArray.push(labelData)
+
+      resultArray.push(labelData);
     } else if (newData[i].length === 7) {
       const dataPosition = [
         parseInt(newData[i][3]), 
@@ -76,7 +77,8 @@ const beautifyData = (data, imageSize) => {
         height,
         width,
       }
-      resultArray.push(labelData)
+
+      resultArray.push(labelData);
     } else if (newData[i].length === 8) {
       const dataPosition = [
         parseInt(newData[i][4]), 
@@ -96,7 +98,8 @@ const beautifyData = (data, imageSize) => {
         height,
         width,
       }
-      resultArray.push(labelData)
+
+      resultArray.push(labelData);
     } else if (newData[i].length === 9) {
       const dataPosition = [
         parseInt(newData[i][5]), 
@@ -116,7 +119,8 @@ const beautifyData = (data, imageSize) => {
         height,
         width,
       }
-      resultArray.push(labelData)
+
+      resultArray.push(labelData);
     } else if (newData[i].length === 10) {
       const dataPosition = [
         parseInt(newData[i][6]), 
@@ -136,7 +140,8 @@ const beautifyData = (data, imageSize) => {
         height,
         width,
       }
-      resultArray.push(labelData)
+
+      resultArray.push(labelData);
     }
   }
   

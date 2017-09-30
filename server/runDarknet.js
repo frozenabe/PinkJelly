@@ -1,24 +1,16 @@
 require('dotenv').config();
 const { exec } = require('child_process');
 const path = require('path');
+const downloadS3 = require('./downloadS3');
 const beautifyData = require('./beautifyData');
 const getImageSize = require('./getImageSize');
-const fs = require('fs');
-const request = require('request');
-
-const download = (uri, filename, callback) => {
-  request.head(uri, function(err, res, body){
-    console.log('content-type:', res.headers['content-type']);
-    console.log('content-length:', res.headers['content-length']);
-
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-  });
-};
 
 const runDarknet = (userEmail) => 
   new Promise((resolve, reject) => {
+    
     const imageUrlS3 = `${process.env.AWS_S3_BUCKET_IMAGE_URL}/${userEmail}-image.jpg`;
-    download(imageUrlS3, `./darknet/${userEmail}-super.jpg`, () => console.log('done'));
+    downloadS3(imageUrlS3, `./darknet/${userEmail}-super.jpg`, () => console.log('download complete'));
+    
     getImageSize(imageUrlS3)
     .then((imageSize) => {
 
@@ -28,20 +20,17 @@ const runDarknet = (userEmail) =>
 
       let labelData
       dark.stdout.on('data', (data) => {
-        console.log(data.toString('utf8'))
         labelData = beautifyData(data.toString('utf8'), imageSize);
-
       }).on('end', () => {
-        console.log(labelData)
         resolve(labelData);
-        reject('eg')
+        reject('stdout was rejected')
       });
 
       //// ****catches tensorflow backend err, uncomment when trying to findout python err*****
-      dark.stderr.on('data', (data) => {
-        console.log(`stderr: ${data}`);
-      })
-    })
-  })
+      // dark.stderr.on('data', (data) => {
+      //   console.log(`stderr: ${data}`);
+      // })
+    });
+  });
 
 module.exports = runDarknet;

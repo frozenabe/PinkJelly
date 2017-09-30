@@ -2,7 +2,6 @@ const router = require('express').Router();
 const runDarknet = require('./runDarknet');
 
 router.post('/', (req, res) => {
-  console.log(req.body);
   const userEmail = req.body.userEmail || 'test%40test.com' // @ -> %40
 
   runDarknet(userEmail)
