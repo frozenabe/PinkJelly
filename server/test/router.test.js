@@ -1,12 +1,20 @@
+require('dotenv').config();
 const chai = require('chai');
 const chaiAsPromised = require("chai-as-promised");
 const chaiHttp = require('chai-http');
 
 const app = require('../index');
 const beautifyData = require('../beautifyData');
+const beautifyDataHelper = require('../beautifyDataHelper');
 const getImageSize = require('../getImageSize');
+const downloadS3 = require('../downloadS3');
 const runDarknet = require('../runDarknet');
-const testEmail = 'test%40test.com'
+
+const testEmail = 'test@test.com';
+const wrongTestEmail = 'test.com';
+const simpleYoloType = 'simple';
+const funnyYoloType = 'funny';
+const wrongYoloType = 'wrong';
 const imageUrlS3 = `${process.env.AWS_S3_BUCKET_IMAGE_URL}/${testEmail}-image.jpg`;
 
 chai.use(chaiAsPromised);
@@ -15,25 +23,40 @@ const expect = chai.expect;
 chai.should();
 
 // ***istanbul doesnt read =>(arrow) functions as functions***
-describe('#scenarios for getting image from S3', () => {
-
-  it('should get an image url as string from S3', () => {
-    expect(imageUrlS3).to.be.a('string');
-  });
-
-});
-
 describe('#functions in this server', () => {
 
-  const data = 'one 69, 161, 252, 310\none two 911, 202, 1057, 411\none two three 431, 213, 1422, 123\none two three four 100, 200, 300, 400\none two three four five 100, 200, 300, 400\none two three four five six 100, 200, 300, 400\none two three four five six seven 100, 200, 300, 400\n';
+  let data = 'one 69, 161, 252, 310 \none two 911, 202, 1057, 411 \none two three 431, 213, 1422, 123 \none two three four 100, 200, 300, 400 \none two three four five 100, 200, 300, 400 \none two three four five six 100, 200, 300, 400 \n';
+  
   const imageSize = { height: 100, width: 100 };
 
   describe('beautifyData', () => {
 
-    it('should export a function that returns an object', () => {
+    it('should export a function that returns an array', () => {
       expect(beautifyData).to.be.a('function');
       expect(beautifyData(data, imageSize)).to.be.an('array');
     });
+    
+  });
+
+  describe('beautifyDataHelper', () => {
+
+    let testData = data.replace(/]|\[|,/g, '');
+    testData = testData.split('\n');
+    testData.pop();
+    const newTestData = [];
+    testData.forEach((eachData) => {
+      eachData = eachData.split(' ');
+      eachData.pop();
+      newTestData.push(eachData);
+    });
+
+    it('should export a function that returns an object', () => {
+      expect(beautifyDataHelper).to.be.a('function');
+      newTestData.forEach((eachNewData) => {
+        expect(beautifyDataHelper((eachNewData, eachNewData.length, imageSize.height, imageSize.width))).to.be.an('object');
+      });
+    });
+
   });
 
   describe('getImageSize', () => {
@@ -43,30 +66,70 @@ describe('#functions in this server', () => {
         getImageSize(imageUrlS3).should.eventually.have.property('height'),
         getImageSize(imageUrlS3).should.eventually.have.property('width')
       ]).should.notify(done);
-    });
+    }).timeout(3000);
   });
 
-  it('should throw error on wrong info', () => {
-    
-  });
+  describe('downlaodS3', () => {
+
+    it('should fail when given invalid parameters', () => {
+      expect(downloadS3(`wrong uri`, `./darknet/${testEmail}-super.jpg`, () => console.log('download complete'))).to.equal('downloadS3 invalid uri');
+      expect(downloadS3(`${process.env.AWS_S3_BUCKET_IMAGE_URL}/${testEmail}-image.jpg`, `wrong filename`, () => console.log('download complete'))).to.equal('downloadS3 invalid filename');
+    });
+  })
 
 });
 
 describe('#POST check', () => {
 
-  it('should return successfully(200) return an array of object(s)', (done) => {
+  it('should only return an array of object(s) when given valid parameters', (done) => {
     chai.request(app)
     .post('/')
     .end((err, res) => {
-      expect(res).to.have.status(200),
-      runDarknet(testEmail).should.eventually.be.an('array');
-      runDarknet(testEmail).should.eventually.have.property('label');
-      runDarknet(testEmail).should.eventually.have.property('x');
-      runDarknet(testEmail).should.eventually.have.property('y');
-      runDarknet(testEmail).should.eventually.have.property('height');
-      runDarknet(testEmail).should.eventually.have.property('width');
+      expect(res).to.have.status(200);
+      runDarknet(testEmail, wrongYoloType).should.eventually.be.rejected;
+      runDarknet(wrongTestEmail, funnyYoloType).should.eventually.be.rejected;
+      runDarknet(testEmail, funnyYoloType).should.eventually.be.an('array');
+      runDarknet(testEmail, funnyYoloType).should.eventually.have.property('label');
+      runDarknet(testEmail, funnyYoloType).should.eventually.have.property('x');
+      runDarknet(testEmail, funnyYoloType).should.eventually.have.property('y');
+      runDarknet(testEmail, funnyYoloType).should.eventually.have.property('height');
+      runDarknet(testEmail, funnyYoloType).should.eventually.have.property('width');
+      runDarknet(testEmail, simpleYoloType).should.eventually.be.an('array');
+      runDarknet(testEmail, simpleYoloType).should.eventually.have.property('label');
+      runDarknet(testEmail, simpleYoloType).should.eventually.have.property('x');
+      runDarknet(testEmail, simpleYoloType).should.eventually.have.property('y');
+      runDarknet(testEmail, simpleYoloType).should.eventually.have.property('height');
+      runDarknet(testEmail, simpleYoloType).should.eventually.have.property('width');
       done();
     });
-  }).timeout(20000);   
+  }).timeout(15000);
+
+  it('should fail with invalid userEmail', (done) => {
+    chai.request(app)
+    .post('/')
+    .type('form')
+    .send({
+      userEmail: wrongTestEmail,
+      yoloType: funnyYoloType,
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(404);
+      done();
+    });
+  });
+
+  it('should fail with invalid yoloType', (done) => {
+    chai.request(app)
+    .post('/')
+    .type('form')
+    .send({
+      userEmail: testEmail,
+      yoloType: wrongYoloType,
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(404);
+      done();
+    });
+  });
 
 });

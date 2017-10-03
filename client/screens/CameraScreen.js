@@ -54,16 +54,15 @@ export default class CameraScreen extends Component {
             if (response.status !== 201) {
               throw new Error("Failed to upload image to S3");
             }
-            console.log(response.body);
           });
         })
         .then(() => {
           setLoadingStatus(true);
           axios.post(AWS_EC2, {
             userEmail: user.email,
+            yoloType: 'simple'
           })
             .then(res => {
-              console.log(res);
               if (!res.data.length) {
                 return alert(`We can't detect anything. Please take a new picture.`)
               }
@@ -76,6 +75,54 @@ export default class CameraScreen extends Component {
     }
   }
 
+  snapshotFunny() {
+    const { setImagePath, setLoadingStatus, setDetectionData } = this.props;
+    const user = firebase.auth().currentUser;
+
+    if (this.camera) {
+      this.camera.takePictureAsync()
+        .then(data => {
+          const { uri } = data;
+          const file = {
+            uri: uri,
+            name: `${user.email}-image.jpg`,
+            type: "image/jpg"
+          }
+
+          const options = {
+            keyPrefix: AWS_S3_KEY_PREFIX,
+            bucket: AWS_S3_BUCKET_NAME,
+            region: AWS_REGION,
+            accessKey: AWS_ACCESS_KEY,
+            secretKey: AWS_SECRET_KEY,
+            successActionStatus: 201,
+          }
+          setImagePath(uri);
+
+          return RNS3.put(file, options).then(response => {
+            if (response.status !== 201) {
+              throw new Error("Failed to upload image to S3");
+            }
+          });
+        })
+        .then(() => {
+          setLoadingStatus(true);
+          axios.post(AWS_EC2, {
+            userEmail: user.email,
+            yoloType: 'funny'
+          })
+            .then(res => {
+              if (!res.data.length) {
+                return alert(`We can't detect anything. Please take a new picture.`)
+              }
+              setDetectionData(res.data);
+            })
+              .then(() => setLoadingStatus(false))
+              .catch(err => console.log(err));
+          })
+          .catch(err => console.log(err));
+    }
+  }
 
   render() {
     const { hasCameraPermission } = this.state;
@@ -88,7 +135,7 @@ export default class CameraScreen extends Component {
       return (
         <View style={styles.screenContainer}>
           <Camera ref={ref => { this.camera = ref; }} style={styles.camera}/>
-          <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)}/>
+          <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)} snapshotFunny={this.snapshotFunny.bind(this)}/>
         </View>
       );
     }

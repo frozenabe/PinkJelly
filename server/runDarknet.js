@@ -5,32 +5,46 @@ const downloadS3 = require('./downloadS3');
 const beautifyData = require('./beautifyData');
 const getImageSize = require('./getImageSize');
 
-const runDarknet = (userEmail) => 
+const runDarknet = (userEmail, yoloType) =>
   new Promise((resolve, reject) => {
-    
     const imageUrlS3 = `${process.env.AWS_S3_BUCKET_IMAGE_URL}/${userEmail}-image.jpg`;
-    downloadS3(imageUrlS3, `./darknet/${userEmail}-super.jpg`, () => console.log('download complete'));
     
-    getImageSize(imageUrlS3)
-    .then((imageSize) => {
+    let execStatement;
+    switch (yoloType) {
+      case 'simple':
+        downloadS3(imageUrlS3, `./darknet/${userEmail}-super.jpg`, () => console.log('download complete'));
+        execStatement = `./darknet detect cfg/yolo.cfg yolo.weights ${userEmail}-super.jpg`;
+        break;
+      case 'funny':
+        downloadS3(imageUrlS3, `./darknet/${userEmail}-super.jpg`, () => console.log('download complete'));
+        execStatement = `./darknet detector test cfg/combine9k.data cfg/yolo9000.cfg yolo9000.weights ${userEmail}-super.jpg`;
+        break;
+      default:
+        console.log('runDarknet invalid yoloType');
+    }
 
-      const dark = exec(`./darknet detector test cfg/combine9k.data cfg/yolo9000.cfg yolo9000.weights ${userEmail}-super.jpg`, {
-        cwd: path.join(__dirname, './darknet'),
-      });
-
-      let labelData
-      dark.stdout.on('data', (data) => {
-        labelData = beautifyData(data.toString('utf8'), imageSize);
-      }).on('end', () => {
-        resolve(labelData);
-        reject('stdout was rejected')
-      });
-
-      //// ****catches tensorflow backend err, uncomment when trying to findout python err*****
-      // dark.stderr.on('data', (data) => {
-      //   console.log(`stderr: ${data}`);
-      // })
-    });
+    if (execStatement !== undefined) {  
+      getImageSize(imageUrlS3)
+        .then((imageSize) => {
+          const dark = exec(execStatement, {
+            cwd: path.join(__dirname, './darknet'),
+          });
+    
+          let labelData
+          dark.stdout.on('data', (data) => {
+            labelData = beautifyData(data.toString('utf8'), imageSize);
+          }).on('end', () => {
+            resolve(labelData);
+            reject('stdout was rejected');
+          });
+    
+          // dark.stderr.on('data', (data) => {
+          //   console.log(`stderr: ${data}`);
+          // })
+        });
+    } else {
+      reject();
+    }
   });
 
 module.exports = runDarknet;
