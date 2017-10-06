@@ -14,7 +14,7 @@ const setObjectCoordinates = (originWidth, originHeight, x, y) => {
   return { left, top };
 };
 
-const PhotoScreen = ({imagePath, detectionData, setDetectionData}) => {
+const PhotoScreen = ({imagePath, detectionData, setDetectionData, yoloType}) => {
   return (
     <View style={styles.imageContainer}>
       {
@@ -29,7 +29,7 @@ const PhotoScreen = ({imagePath, detectionData, setDetectionData}) => {
           ? <Loading/>
           : <Image source={{uri: imagePath}} style={styles.photo}/>
       }
-      <ControlBar screen="PHOTO" setDetectionData={setDetectionData}/>
+      <ControlBar screen="PHOTO" setDetectionData={setDetectionData} yoloType={yoloType}/>
     </View>
   );
 }

@@ -23,7 +23,7 @@ export default class Loading extends Component {
           clearInterval(progressing);
        }
         this.setState({ progress });
-      }, 500);
+      }, 800);
     }, 1000);
   }
 
