@@ -11,6 +11,7 @@ export default class Screens extends Component {
     isLoading: false,
     imagePath: '',
     detectionData: [],
+    yoloType: 'simple',
   }
 
   setImagePath(path) {
@@ -31,12 +32,14 @@ export default class Screens extends Component {
     });
   }
 
-  // slideToPhoto() {
-  //   this._swiper.scrollBy(1);
-  // }
+  setYoloType() {
+    this.setState({
+      yoloType: this.state.yoloType === 'simple' ? 'funny' : 'simple',
+    });
+  }
 
   render() {
-    const { isLoading, imagePath, detectionData } = this.state;
+    const { isLoading, imagePath, detectionData, yoloType } = this.state;
 
     if (isLoading) {
       return <Loading/>;
@@ -47,6 +50,7 @@ export default class Screens extends Component {
             imagePath={imagePath}
             detectionData={detectionData}
             setDetectionData={this.setDetectionData.bind(this)}
+            yoloType={yoloType}
           />
         </View>
       );
@@ -57,6 +61,8 @@ export default class Screens extends Component {
             setLoadingStatus={this.setLoadingStatus.bind(this)}
             setImagePath={this.setImagePath.bind(this)}
             setDetectionData={this.setDetectionData.bind(this)}
+            setYoloType={this.setYoloType.bind(this)}
+            yoloType={yoloType}
           />
         </View>
       );

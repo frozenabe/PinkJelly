@@ -3,39 +3,42 @@ import { StyleSheet, View, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { SimpleLineIcons, Entypo } from '@expo/vector-icons';
 
-const ControlBar = ({ screen, snapshot, snapshotFunny, setDetectionData }) => {
+const ControlBar = ({ screen, snapshot, setDetectionData, setYoloType, yoloType }) => {
+  const controlBar = {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+    backgroundColor: yoloType === 'simple' ? '#82b1ff' : '#ee6e73',
+  };
+
   switch (screen) {
     case 'CAMERA':
+      const icon = yoloType === 'simple' ? 'camera' : 'magic-wand';
+
       return (
-        <View style={styles.controlBar}>
-          <View style={styles.circle} >
-            <SimpleLineIcons name="camera" size={32} color="#fff" onPress={() => snapshot()}/>
+        <View style={controlBar}>
+          <View style={styles.typeChange}>
+            <Entypo name="cycle" size={32} color="#fff" onPress={() => setYoloType()}/>
           </View>
-          <View style={styles.funnyCircle}>
-            <SimpleLineIcons name="magic-wand" size={32} color="#fff" onPress={() => snapshotFunny()}/>
-          </View>    
+          <View style={styles.circle} >
+            <SimpleLineIcons name={icon} size={32} color="#fff" onPress={() => snapshot()}/>
+          </View>
         </View>
       );
     case 'PHOTO':
       return (
-        <View style={styles.controlBar}>
+        <View style={controlBar}>
           <Entypo name="back" size={32} color="#fff" onPress={() => setDetectionData([])}/>
         </View>
       );
     default:
-      console.log('no screen');
+      alert('no screen');
   }
 
 }
 
 const styles = StyleSheet.create({
-  controlBar: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 4,
-    backgroundColor: '#82b1ff',
-  },
   circle: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -47,17 +50,12 @@ const styles = StyleSheet.create({
     borderRadius: 64,
     backgroundColor: 'transparent'
   },
-  funnyCircle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 64,
-    height: 64,
-    padding: 4,
-    borderWidth: 2,
-    borderColor: '#fff',
-    borderRadius: 64,
-    backgroundColor: 'transparent'
-  }
+  typeChange: {
+    position: 'absolute',
+    top: 12,
+    left: '50%',
+    transform: [{translateX: -12}],
+  },
 });
 
 ControlBar.propTypes = {

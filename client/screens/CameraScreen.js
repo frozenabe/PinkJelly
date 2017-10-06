@@ -27,7 +27,7 @@ export default class CameraScreen extends Component {
   }
 
   snapshot() {
-    const { setImagePath, setLoadingStatus, setDetectionData } = this.props;
+    const { setImagePath, setLoadingStatus, setDetectionData, yoloType } = this.props;
     const user = firebase.auth().currentUser;
 
     if (this.camera) {
@@ -60,56 +60,7 @@ export default class CameraScreen extends Component {
           setLoadingStatus(true);
           axios.post(AWS_EC2, {
             userEmail: user.email,
-            yoloType: 'simple'
-          })
-            .then(res => {
-              if (!res.data.length) {
-                return alert(`We can't detect anything. Please take a new picture.`)
-              }
-              setDetectionData(res.data);
-            })
-              .then(() => setLoadingStatus(false))
-              .catch(err => console.log(err));
-          })
-          .catch(err => console.log(err));
-    }
-  }
-
-  snapshotFunny() {
-    const { setImagePath, setLoadingStatus, setDetectionData } = this.props;
-    const user = firebase.auth().currentUser;
-
-    if (this.camera) {
-      this.camera.takePictureAsync()
-        .then(data => {
-          const { uri } = data;
-          const file = {
-            uri: uri,
-            name: `${user.email}-image.jpg`,
-            type: "image/jpg"
-          }
-
-          const options = {
-            keyPrefix: AWS_S3_KEY_PREFIX,
-            bucket: AWS_S3_BUCKET_NAME,
-            region: AWS_REGION,
-            accessKey: AWS_ACCESS_KEY,
-            secretKey: AWS_SECRET_KEY,
-            successActionStatus: 201,
-          }
-          setImagePath(uri);
-
-          return RNS3.put(file, options).then(response => {
-            if (response.status !== 201) {
-              throw new Error("Failed to upload image to S3");
-            }
-          });
-        })
-        .then(() => {
-          setLoadingStatus(true);
-          axios.post(AWS_EC2, {
-            userEmail: user.email,
-            yoloType: 'funny'
+            yoloType,
           })
             .then(res => {
               if (!res.data.length) {
@@ -126,6 +77,7 @@ export default class CameraScreen extends Component {
 
   render() {
     const { hasCameraPermission } = this.state;
+    const { setYoloType, yoloType } = this.props;
     if (!hasCameraPermission) {
     // if (hasCameraPermission === null) {
     //   return <Text>ssibal</Text>;
@@ -135,7 +87,7 @@ export default class CameraScreen extends Component {
       return (
         <View style={styles.screenContainer}>
           <Camera ref={ref => { this.camera = ref; }} style={styles.camera}/>
-          <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)} snapshotFunny={this.snapshotFunny.bind(this)}/>
+          <ControlBar screen="CAMERA" snapshot={this.snapshot.bind(this)} setYoloType={setYoloType} yoloType={yoloType}/>
         </View>
       );
     }
