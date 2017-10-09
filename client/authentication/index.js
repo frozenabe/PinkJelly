@@ -24,7 +24,6 @@ export default class Authentication extends Component {
   render() {
     const { emailVerification } = this.state;
     const { onCheckLoggedIn } = this.props;
-    // console.log(!firebase.auth().currentUser.emailVerified);
     return (
       <View style={styles.wrapper}>
         {

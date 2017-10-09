@@ -29,17 +29,17 @@ export default class SignUp extends Component{
     }
 
     if (email !== '' && password !== '') {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          user.sendEmailVerification();
-          alert('Please, verify your email address.')
-        })
-        .catch(error => {
-          (error.code === 'auth/weak-password')
-            ? alert('The password is too weak.')
-            : alert(error.message);
-          console.log(error);
-        });
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(user => {
+            user.sendEmailVerification();
+            alert('Please, verify your email address.')
+          })
+          .catch(error => {
+            (error.code === 'auth/weak-password')
+              ? alert('The password is too weak.')
+              : alert(error.message);
+            console.log(error);
+          });
     }
   }
 
@@ -101,8 +101,11 @@ export default class SignUp extends Component{
             ? <FormValidationMessage>Password가 다르거나 입력되지 않았습니다</FormValidationMessage>
             : null
           }
-          <Button small onPress={() => this.onSignUp()} title="SIGN UP" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
-          <Text onPress={() => setSignPage()} style={styles.backToSignIn}>BACK TO SIGNIN</Text>
+          <View style={styles.buttonWrapper}>
+            <Button small onPress={() => this.onSignUp()} title="SIGN UP" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
+            <Text onPress={() => setSignPage()} style={styles.backToSignIn}>BACK TO SIGNIN</Text>
+          </View>
+
         </View>
       </View>
     );
@@ -131,6 +134,9 @@ const styles = StyleSheet.create({
   inputStyle: {
     color: '#222',
     fontWeight: '100',
+  },
+  buttonWrapper: {
+    marginTop: 16,
   },
   buttonStyle: {
     marginVertical: 16,

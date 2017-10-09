@@ -9,11 +9,13 @@ export default class Paw extends Component {
   render() {
     return (
       <View style={styles.pawContainer}>
-        <PawFinger top={28} left={-28} zIndex={2} scale={0.85} rotate="-24deg" delay={200}/>
-        <PawFinger top={-24} left={12} zIndex={1} scale={1} rotate="-8deg" delay={400}/>
-        <PawFinger top={-16} left={72} zIndex={1} scale={0.95} rotate="12deg" delay={600}/>
-        <PawFinger top={28} left={112} zIndex={2} scale={0.85} rotate="24deg" delay={800}/>
-        <PawPalm top={80} left={54} zIndex={3} scale={2}/>
+        <PawFinger top={70} left={8} zIndex={2} scale={0.85} rotate="-24deg" delay={200}/>
+        <PawFinger top={18} left={48} zIndex={1} scale={1} rotate="-8deg" delay={400}/>
+        <PawFinger top={26} left={108} zIndex={1} scale={0.95} rotate="12deg" delay={600}/>
+        <PawFinger top={70} left={148} zIndex={2} scale={0.85} rotate="24deg" delay={800}/>
+        <View style={styles.pawPalm}>
+          <PawPalm top={74} left={48} zIndex={3} scale={2}/>
+        </View>
       </View>
     );
   }
@@ -23,10 +25,15 @@ export default class Paw extends Component {
 const styles = StyleSheet.create({
   pawContainer: {
     position: 'relative',
+    paddingTop: 48,
+    paddingHorizontal: 40,
+    transform: [{rotate: '12deg'}],
+  },
+  pawPalm: {
+    position: 'relative',
     width: 154,
     height: 160,
     borderRadius: 160,
     backgroundColor: '#fff',
-    transform: [{rotate: '12deg'}],
   },
 });

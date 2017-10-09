@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, KeyboardAvoidingView  } from 'react-native';
+import { StyleSheet, View, Text, Image, KeyboardAvoidingView, ActivityIndicator  } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
@@ -15,6 +15,7 @@ export default class SignIn extends Component{
     emailType: true,
     passwordType: true,
     register: false,
+    processing: false,
   };
 
   onSignIn() {
@@ -31,6 +32,8 @@ export default class SignIn extends Component{
     } else {
       this.setState({passwordType: true})
     }
+
+    this.setState({processing: true});
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => {
@@ -52,7 +55,7 @@ export default class SignIn extends Component{
   }
 
   render() {
-    const { register, emailType, passwordType } = this.state;
+    const { register, emailType, passwordType, processing } = this.state;
     if (register) {
       return <SignUp setSignPage={this.setSignPage.bind(this)}/>;
     } else {
@@ -70,7 +73,7 @@ export default class SignIn extends Component{
               inputStyle={styles.inputStyle}
             />
             {(!emailType)
-              ? <FormValidationMessage>Email을 입력해주세요</FormValidationMessage>
+              ? <FormValidationMessage>Enter your Email address</FormValidationMessage>
               : null
             }
             <FormInput
@@ -82,12 +85,18 @@ export default class SignIn extends Component{
               secureTextEntry
             />
             {(!passwordType)
-              ? <FormValidationMessage>Password을 입력해주세요</FormValidationMessage>
+              ? <FormValidationMessage>Enter your Password</FormValidationMessage>
               : null
             }
-
-            <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
-            <Text onPress={() => this.setSignPage()} style={styles.signUp}>NEW ACCOUNT</Text>
+            {(!processing)
+              ? (<View style={styles.buttonWrapper}>
+                  <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
+                  <Text onPress={() => this.setSignPage()} style={styles.signUp}>NEW ACCOUNT</Text>
+                </View>)
+              : (<View style={styles.buttonWrapper}>
+                  <ActivityIndicator color="#fff" size="large" />
+                </View>)
+            }
           </View>
         </KeyboardAvoidingView>
       );
@@ -118,8 +127,11 @@ const styles = StyleSheet.create({
     color: '#222',
     fontWeight: '100',
   },
+  buttonWrapper: {
+    marginTop: 16,
+  },
   buttonStyle: {
-    marginVertical: 16,
+    marginBottom: 16,
     borderWidth: 1,
     borderColor: '#fff',
     borderRadius: 100,

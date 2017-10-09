@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   PawPalm: {
      width: 44,
      height: 40,
+     margin: 8,
      borderRadius: 48,
      backgroundColor: '#ff80ab',
   },
