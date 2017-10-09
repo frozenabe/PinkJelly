@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { SimpleLineIcons, Entypo } from '@expo/vector-icons';
 
@@ -33,7 +33,7 @@ const ControlBar = ({ screen, snapshot, setDetectionData, setYoloType, yoloType 
         </View>
       );
     default:
-      alert('no screen');
+      alert('No Screen');
   }
 
 }
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     left: '50%',
-    transform: [{translateX: -12}],
+    transform: [{ translateX: -12 }],
   },
 });
 

@@ -1,33 +1,33 @@
-const beautifyDataHelper = (eachNewData, length, height, width) => {
-  let label;
-  switch (length) {
+const beautifyDataHelper = (data, dataLength, height, width) => {
+  let label = null;
+  switch (dataLength) {
     case 5:
-      label = `${eachNewData[0]}`;
+      label = `${data[0]}`;
       break;
     case 6:
-      label = `${eachNewData[0]} ${eachNewData[1]}`;
+      label = `${data[0]} ${data[1]}`;
       break;
     case 7:
-      label = `${eachNewData[0]} ${eachNewData[1]} ${eachNewData[2]}`;
+      label = `${data[0]} ${data[1]} ${data[2]}`;
       break;
     case 8:
-      label = `${eachNewData[0]} ${eachNewData[1]} ${eachNewData[2]} ${eachNewData[3]}`;
+      label = `${data[0]} ${data[1]} ${data[2]} ${data[3]}`;
       break;
     case 9:
-      label = `${eachNewData[0]} ${eachNewData[1]} ${eachNewData[2]} ${eachNewData[3]} ${eachNewData[4]}`;
+      label = `${data[0]} ${data[1]} ${data[2]} ${data[3]} ${data[4]}`;
       break;
     case 10:
-      label = `${eachNewData[0]} ${eachNewData[1]} ${eachNewData[2]} ${eachNewData[3]} ${eachNewData[4]} ${eachNewData[5]}`;
+      label = `${data[0]} ${data[1]} ${data[2]} ${data[3]} ${data[4]} ${data[5]}`;
       break;
     default:
-      label = 'invalid data length given during beautifyDataHelper';
+      console.log('invalid data length given during beautifyDataHelper');
   }
 
   const dataPosition = [
-    parseInt(eachNewData[length - 4]), 
-    parseInt(eachNewData[length - 3]), 
-    parseInt(eachNewData[length - 2]), 
-    parseInt(eachNewData[length - 1])
+    parseInt(data[dataLength - 4]), 
+    parseInt(data[dataLength - 3]), 
+    parseInt(data[dataLength - 2]), 
+    parseInt(data[dataLength - 1])
   ];
 
   const [ left, top, right, bottom ] = dataPosition;

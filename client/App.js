@@ -39,10 +39,14 @@ export default class App extends Component {
     const user = firebase.auth().currentUser;
 
     if (!user) {
-      this.setState({loggedIn: false});
+      this.setState({
+        loggedIn: false,
+      });
       ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
     } else {
-      this.setState({loggedIn: true});
+      this.setState({
+        loggedIn: true,
+      });
       ScreenOrientation.allow(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
     }
   }
@@ -53,13 +57,14 @@ export default class App extends Component {
       <View style={styles.container}>
         {
           !loggedIn
-            ? <Authentication onCheckLoggedIn={this.onCheckLoggedIn.bind(this)}/>
-            : <Screens/>
+            ? <Authentication onCheckLoggedIn={this.onCheckLoggedIn.bind(this)} />
+            : <Screens />
         }
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

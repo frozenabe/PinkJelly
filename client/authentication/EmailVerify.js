@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import PropTypes from 'prop-types';
 
-const EmailVerify = ({onVerifyEmail}) => {
+const EmailVerify = ({ onVerifyEmail }) => {
 
   return (
     <View style={styles.container}>
-      <Text>email 확인 하고 오셈</Text>
+      <Text>Please check your Email for confirmation</Text>
       <Button
         onPress = {() => onVerifyEmail()}
-        title="확인"
+        title="confirm"
         color="#841584"
-        accessibilityLabel="Learn more about this purple button"
       />
     </View>
   );

@@ -6,7 +6,7 @@ const beautifyData = (data, imageSize) => {
   data.pop();
 
   const newData = [];
-  data.forEach((eachData) => {
+  data.forEach(eachData => {
     eachData = eachData.split(' ');
     eachData.pop();
     newData.push(eachData);
@@ -15,7 +15,7 @@ const beautifyData = (data, imageSize) => {
   const { height, width } = imageSize;
   const beautifiedData = [];
   
-  newData.forEach((eachNewData) => {
+  newData.forEach(eachNewData => {
     eachNewData.length >= 5 && eachNewData.length <= 10
       ? beautifiedData.push(beautifyDataHelper(eachNewData, eachNewData.length, height, width))
       : console.log('either an invalid data or object was not detected');

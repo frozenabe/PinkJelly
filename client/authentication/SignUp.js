@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
@@ -17,44 +17,51 @@ export default class SignUp extends Component{
   onSignUp() {
     const { email, password } = this.state;
     if (email === '') {
-       this.setState({emailType: false})
+      this.setState({ 
+        emailType: false,
+      });
     } else {
-       this.setState({emailType: true})
+      this.setState({
+        emailType: true,
+      });
     }
 
     if (password === '') {
-      this.setState({passwordType: false})
+      this.setState({ 
+        passwordType: false,
+      });
     } else {
-      this.setState({passwordType: true})
+      this.setState({ 
+        passwordType: true,
+      });
     }
 
     if (email !== '' && password !== '') {
       firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(user => {
-            user.sendEmailVerification();
-            alert('Please, verify your email address.')
-          })
-          .catch(error => {
-            (error.code === 'auth/weak-password')
-              ? alert('The password is too weak.')
-              : alert(error.message);
-            console.log(error);
-          });
+        .then(user => {
+          user.sendEmailVerification();
+          alert('Please, verify your email address.');
+        })
+        .catch(error => {
+          (error.code === 'auth/weak-password')
+            ? alert('The password is too weak.')
+            : alert(error.message);
+          console.log(error);
+        });
     }
   }
 
   onConfirmPassword(confirmPassword) {
     const { password, confirmPasswordType } = this.state;
     if (password !== confirmPassword) {
-      this.setState({
-        confirmPasswordType: false
-      })
+      this.setState({ 
+        confirmPasswordType: false,
+      });
     } else {
-      this.setState({
-        confirmPasswordType: true
-      })
+      this.setState({ 
+        confirmPasswordType: true,
+      });
     }
-
   }
 
   render() {
@@ -67,18 +74,18 @@ export default class SignUp extends Component{
         </View>
         <View style={styles.signupForm}>
           <FormInput
-            onChangeText={value => {this.setState({email: value})}}
+            onChangeText={value => this.setState({ email: value })}
             placeholder="EMAIL ADDRESS"
             placeholderTextColor="#fff"
             containerStyle={styles.inputContainerStyle}
             inputStyle={styles.inputStyle}
           />
           {(!emailType)
-            ? <FormValidationMessage>Email을 입력해주세요</FormValidationMessage>
+            ? <FormValidationMessage>Enter Email</FormValidationMessage>
             : null
           }
           <FormInput
-            onChangeText={value => this.setState({password: value})}
+            onChangeText={value => this.setState({ password: value })}
             placeholder="PASSWORD"
             placeholderTextColor="#fff"
             containerStyle={styles.inputContainerStyle}
@@ -86,7 +93,7 @@ export default class SignUp extends Component{
             secureTextEntry
           />
           {(!passwordType)
-            ? <FormValidationMessage>Password을 입력해주세요</FormValidationMessage>
+            ? <FormValidationMessage>Enter Password</FormValidationMessage>
             : null
           }
           <FormInput
@@ -98,14 +105,19 @@ export default class SignUp extends Component{
             secureTextEntry
           />
           {(!confirmPasswordType)
-            ? <FormValidationMessage>Password가 다르거나 입력되지 않았습니다</FormValidationMessage>
+            ? <FormValidationMessage>Incorrect Password</FormValidationMessage>
             : null
           }
           <View style={styles.buttonWrapper}>
-            <Button small onPress={() => this.onSignUp()} title="SIGN UP" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
+            <Button 
+              small 
+              onPress={() => this.onSignUp()} 
+              title="SIGN UP" 
+              buttonStyle={styles.buttonStyle} 
+              backgroundColor="transparent" 
+              color="#fff"/>
             <Text onPress={() => setSignPage()} style={styles.backToSignIn}>BACK TO SIGNIN</Text>
           </View>
-
         </View>
       </View>
     );

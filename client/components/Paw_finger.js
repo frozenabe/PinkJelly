@@ -11,15 +11,18 @@ export default class PawFinger extends Component {
       top,
       left,
       zIndex,
-      transform: [{scale}, {rotate}],
+      transform: [{ scale }, { rotate }],
     };
 
     return (
       <View style={style}>
-        <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite" duration={800} delay={delay} style={styles.pawFinger} />
-        {/* <TouchableWithoutFeedback onPress={() => this.refs.palm.rubberBand(400)}>
-          <Animatable.View ref="palm" style={styles.pawFinger} ></Animatable.View>
-        </TouchableWithoutFeedback> */}
+        <Animatable.View 
+          animation="pulse" 
+          easing="ease-out" 
+          iterationCount="infinite" 
+          duration={800} 
+          delay={delay} 
+          style={styles.pawFinger} />
       </View>
     );
   }
@@ -27,13 +30,13 @@ export default class PawFinger extends Component {
 
 const styles = StyleSheet.create({
   pawFinger: {
-     width: 70,
-     height: 78,
-     margin: 4,
-     borderRadius: 90,
-     borderWidth: 12,
-     borderColor: '#fff',
-     backgroundColor: '#ff80ab',
+    width: 70,
+    height: 78,
+    margin: 4,
+    borderRadius: 90,
+    borderWidth: 12,
+    borderColor: '#fff',
+    backgroundColor: '#ff80ab',
   },
 });
 

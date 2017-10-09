@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, Dimensions, Image} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Dimensions, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import TouchToSpeakButton from '../components/TouchToSpeakButton';
-import Loading from '../components/Loading';
 import ControlBar from '../components/ControlBar';
 
 const setObjectCoordinates = (originWidth, originHeight, x, y) => {
@@ -14,17 +13,17 @@ const setObjectCoordinates = (originWidth, originHeight, x, y) => {
   return { left, top };
 };
 
-const PhotoScreen = ({imagePath, detectionData, setDetectionData, yoloType}) => {
+const PhotoScreen = ({ imagePath, detectionData, setDetectionData, yoloType }) => {
   return (
     <View style={styles.imageContainer}>
       {
-         detectionData.map((obj, i) => {
-           const { label, x, y, height, width } = obj;
-           const { left, top } = setObjectCoordinates(width, height, x, y);
-           return <TouchToSpeakButton key={`${label}-${i}`} label={label} left={left} top={top}/>;
+        detectionData.map((obj, i) => {
+          const { label, x, y, height, width } = obj;
+          const { left, top } = setObjectCoordinates(width, height, x, y);
+          return <TouchToSpeakButton key={`${label}-${i}`} label={label} left={left} top={top}/>;
         })
       }
-      <Image source={{uri: imagePath}} style={styles.photo}/>
+      <Image source={{ uri: imagePath }} style={styles.photo}/>
       <ControlBar screen="PHOTO" setDetectionData={setDetectionData} yoloType={yoloType}/>
     </View>
   );

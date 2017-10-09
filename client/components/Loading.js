@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Paw from './Paw';
 
-const Loading = ({yoloType}) => {
+const Loading = ({ yoloType }) => {
 
   const loading = {
     flex: 1,

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { ScreenOrientation } from 'expo';
 import * as firebase from 'firebase';
 
 import SignIn from './SignIn';
@@ -15,7 +14,9 @@ export default class Authentication extends Component {
   onVerifyEmail() {
     firebase.auth().signOut()
       .then(() => {
-        this.setState({ emailVerification: !this.state.emailVerification });
+        this.setState({ 
+          emailVerification: !this.state.emailVerification 
+        });
       })
       .catch(err => console.log(err));
   }

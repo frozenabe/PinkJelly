@@ -64,7 +64,7 @@ export default class CameraScreen extends Component {
           })
             .then(res => {
               if (!res.data.length) {
-                return alert(`We can't detect anything. Please take a new picture.`)
+                return alert(`We can't detect anything. Please take a new picture.`);
               }
               setDetectionData(res.data);
             })

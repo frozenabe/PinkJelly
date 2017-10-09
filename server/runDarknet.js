@@ -9,7 +9,7 @@ const runDarknet = (userEmail, yoloType) =>
   new Promise((resolve, reject) => {
     const imageUrlS3 = `${process.env.AWS_S3_BUCKET_IMAGE_URL}/${userEmail}-image.jpg`;
     
-    let execStatement;
+    let execStatement = null;
     switch (yoloType) {
       case 'simple':
         downloadS3(imageUrlS3, `./darknet/${userEmail}-super.jpg`, () => console.log('download complete'));
@@ -23,21 +23,21 @@ const runDarknet = (userEmail, yoloType) =>
         console.log('runDarknet invalid yoloType');
     }
 
-    if (execStatement !== undefined) {  
+    if (execStatement) {  
       getImageSize(imageUrlS3)
         .then((imageSize) => {
           const dark = exec(execStatement, {
             cwd: path.join(__dirname, './darknet'),
           });
     
-          let labelData
+          let labelData;
           dark.stdout.on('data', (data) => {
             labelData = beautifyData(data.toString('utf8'), imageSize);
           }).on('end', () => {
             resolve(labelData);
             reject('stdout was rejected');
           });
-    
+          //// for debugging darknet 
           // dark.stderr.on('data', (data) => {
           //   console.log(`stderr: ${data}`);
           // })

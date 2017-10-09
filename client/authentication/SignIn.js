@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, KeyboardAvoidingView, ActivityIndicator  } from 'react-native';
+import { StyleSheet, View, Text, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import * as firebase from 'firebase';
 import * as Animatable from 'react-native-animatable';
 import SignUp from './SignUp';
-import Loading from '../components/Loading';
 import Paw from '../components/Paw';
 
 export default class SignIn extends Component{
@@ -22,18 +21,28 @@ export default class SignIn extends Component{
     const { email, password } = this.state;
     const { onVerifyEmail, onCheckLoggedIn } = this.props;
     if (email === '') {
-       this.setState({emailType: false})
+      this.setState({ 
+        emailType: false,
+      });
     } else {
-       this.setState({emailType: true})
+      this.setState({ 
+        emailType: true,
+      });
     }
 
     if (password === '') {
-      this.setState({passwordType: false})
+      this.setState({ 
+        passwordType: false,
+      });
     } else {
-      this.setState({passwordType: true})
+      this.setState({ 
+        passwordType: true,
+      });
     }
 
-    this.setState({processing: true});
+    this.setState({ 
+      processing: true,
+    });
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => {
@@ -43,7 +52,12 @@ export default class SignIn extends Component{
           onCheckLoggedIn();
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        alert(err);
+        this.setState({ 
+          processing: false,
+        });
+      });
   }
 
   setSignPage() {
@@ -66,18 +80,18 @@ export default class SignIn extends Component{
           </View>
           <View style={styles.loginForm}>
             <FormInput
-              onChangeText={value => {this.setState({email: value})}}
+              onChangeText={value => this.setState({ email: value })}
               placeholder="EMAIL ADDRESS"
               placeholderTextColor="#fff"
               containerStyle={styles.inputContainerStyle}
               inputStyle={styles.inputStyle}
             />
             {(!emailType)
-              ? <FormValidationMessage>Enter your Email address</FormValidationMessage>
+              ? <FormValidationMessage>Enter Email</FormValidationMessage>
               : null
             }
             <FormInput
-              onChangeText={value => this.setState({password: value})}
+              onChangeText={value => this.setState({ password: value })}
               placeholder="PASSWORD"
               placeholderTextColor="#fff"
               containerStyle={styles.inputContainerStyle}
@@ -85,12 +99,18 @@ export default class SignIn extends Component{
               secureTextEntry
             />
             {(!passwordType)
-              ? <FormValidationMessage>Enter your Password</FormValidationMessage>
+              ? <FormValidationMessage>Enter Password</FormValidationMessage>
               : null
             }
             {(!processing)
               ? (<View style={styles.buttonWrapper}>
-                  <Button small onPress={() => this.onSignIn()} title="SIGN IN" buttonStyle={styles.buttonStyle} backgroundColor="transparent" color="#fff"/>
+                  <Button 
+                    small 
+                    onPress={() => this.onSignIn()} 
+                    title="SIGN IN" 
+                    buttonStyle={styles.buttonStyle} 
+                    backgroundColor="transparent" 
+                    color="#fff"/>
                   <Text onPress={() => this.setSignPage()} style={styles.signUp}>NEW ACCOUNT</Text>
                 </View>)
               : (<View style={styles.buttonWrapper}>

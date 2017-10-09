@@ -10,9 +10,7 @@ export default class PawPalm extends Component {
     try {
       await soundObject.loadAsync(require('../resources/meow.mp3'));
       await soundObject.playAsync();
-      // Your sound is playing!
-    } catch (error) {
-      // An error occurred!
+    } catch (err) {
       console.log(err);
     }
   }
@@ -24,7 +22,7 @@ export default class PawPalm extends Component {
       top,
       left,
       zIndex,
-      transform: [{scale}],
+      transform: [{ scale }],
     };
     return (
       <View style={style}>
