@@ -63,6 +63,8 @@ ControlBar.propTypes = {
   snapshot: PropTypes.func,
   snapshotFunny: PropTypes.func,
   setDetectionData: PropTypes.func,
+  setYoloType: PropTypes.func,
+  yoloType: PropTypes.string,
 };
 
 export default ControlBar;

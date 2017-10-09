@@ -77,15 +77,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-
-// return (
-//   <Swiper ref={(swiper) => {this._swiper = swiper;}} showsButtons={false} loop={false}>
-//     <CameraScreen
-//       setImagePath={this.setImagePath.bind(this)}
-//       slideToPhoto={this.slideToPhoto.bind(this)}
-//       getDetectionData={this.getDetectionData.bind(this)}
-//     />
-//     <PhotoScreen imagePath={this.state.imagePath} detectionData={this.state.detectionData}/>
-//   </Swiper>
-// );

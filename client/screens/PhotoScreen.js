@@ -24,11 +24,7 @@ const PhotoScreen = ({imagePath, detectionData, setDetectionData, yoloType}) => 
            return <TouchToSpeakButton key={`${label}-${i}`} label={label} left={left} top={top}/>;
         })
       }
-      {
-        !imagePath
-          ? <Loading/>
-          : <Image source={{uri: imagePath}} style={styles.photo}/>
-      }
+      <Image source={{uri: imagePath}} style={styles.photo}/>
       <ControlBar screen="PHOTO" setDetectionData={setDetectionData} yoloType={yoloType}/>
     </View>
   );
@@ -49,6 +45,7 @@ PhotoScreen.propTypes = {
   imagePath: PropTypes.string,
   detectionData: PropTypes.array,
   setDetectionData: PropTypes.func,
+  yoloType: PropTypes.string,
 };
 
 export default PhotoScreen;

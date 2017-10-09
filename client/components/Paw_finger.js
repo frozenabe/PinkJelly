@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   pawFinger: {
      width: 70,
      height: 78,
+     margin: 4,
      borderRadius: 90,
      borderWidth: 12,
      borderColor: '#fff',

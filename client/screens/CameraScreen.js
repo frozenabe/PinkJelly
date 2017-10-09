@@ -18,7 +18,7 @@ import ControlBar from '../components/ControlBar';
 
 export default class CameraScreen extends Component {
   state = {
-    hasCameraPermission: null,
+    hasCameraPermission: false,
   };
 
   async componentWillMount() {
@@ -68,8 +68,8 @@ export default class CameraScreen extends Component {
               }
               setDetectionData(res.data);
             })
-              .then(() => setLoadingStatus(false))
-              .catch(err => console.log(err));
+            .then(() => setLoadingStatus(false))
+            .catch(err => console.log(err));
           })
           .catch(err => console.log(err));
     }
@@ -79,9 +79,6 @@ export default class CameraScreen extends Component {
     const { hasCameraPermission } = this.state;
     const { setYoloType, yoloType } = this.props;
     if (!hasCameraPermission) {
-    // if (hasCameraPermission === null) {
-    //   return <Text>ssibal</Text>;
-    // } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
       return (
@@ -114,4 +111,6 @@ CameraScreen.propTypes = {
   setImagePath: PropTypes.func,
   setLoadingStatus: PropTypes.func,
   setDetectionData: PropTypes.func,
+  setYoloType: PropTypes.func,
+  yoloType: PropTypes.string,
 };
