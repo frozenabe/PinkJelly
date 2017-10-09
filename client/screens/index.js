@@ -42,7 +42,7 @@ export default class Screens extends Component {
     const { isLoading, imagePath, detectionData, yoloType } = this.state;
 
     if (isLoading) {
-      return <Loading/>;
+      return <Loading yoloType={yoloType}/>;
     } else if (!isLoading && detectionData.length) {
       return (
         <View style={styles.wrapper}>
