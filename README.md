@@ -1,31 +1,6 @@
 # PinkJelly
 Instant-object-recognition && speech App, easy as 1, 2 ,3!
 
-## How to run locally (for Unix)
-### git clone pinkJelly
-```
-git clone https://github.com/frozenabe/PinkJelly.git
-```
-### Inside client folder, do npm install
-### Inside server folder, git clone Darknet yolo2
-```
-Checkout their website : https://pjreddie.com/darknet/yolo/
-git : git clone https://github.com/pjreddie/darknet
-```
-### Getting weights inside Darknet folder
-```
-yolo2 : wget https://pjreddie.com/media/files/yolo.weights
-tiny-yolo : wget https://pjreddie.com/media/files/tiny-yolo-voc.weights
-yolo9000 : wget https://pjreddie.com/media/files/yolo9000.weights
-```
-### inside darknet/src/image.c, comment out all the printf's and in line 286 add 
-```
-printf("%d, %d, %d, %d \n", left, top, right, bot);
-```
-### Build! (inside terminal type "make" in darknet folder)
-
-
-## OR simply download in experience the APP by...
 ### Download our App using Expo
 https://exp.host/@zao1214/client
 (
