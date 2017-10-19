@@ -20,7 +20,7 @@ https://exp.host/@zao1214/client
   * If we replace AWS EC2 server to c4.large, yolo2 and yolo9000 can be used and it will take 8-10 seconds
   * If we replace AWS EC2 server to any GPU server, it takes 3-4 seconds
   * If we change server code to preload weights on server, every process will take 3seconds less, (GPU 0-1seconds)
-  (I personally like to have loading section, so I decided not to put weights on)
+  (I personally like loading section, so Ive decided not to put weights on)
 
 ```
 Credit :
