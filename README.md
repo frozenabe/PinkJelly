@@ -1,6 +1,11 @@
 # PinkJelly
 Instant-object-recognition && speech App, easy as 1, 2 ,3!
 
+## Check it Out on YouTube
+```
+https://youtu.be/Ip8UTu32vfg
+```
+
 ### Download our App using Expo
 https://exp.host/@zao1214/client
 (
