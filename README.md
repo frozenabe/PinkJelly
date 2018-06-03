@@ -1,3 +1,5 @@
+# The is server is currently not running and can only be checked on Youtube below.
+
 # PinkJelly
 Instant-object-recognition && speech App, easy as 1, 2 ,3!
 
